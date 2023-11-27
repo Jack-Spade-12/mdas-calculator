@@ -1,10 +1,13 @@
-/*
- * Seth Plasabas Cortel
+/**
+ * Submitted By:
+ * 		Seth Plasabas Cortel
  * 
- * Applications Development and Emerging Technologies
- * 
- * Prof. Leo Paulo Villarete
- * 
+ * Submitted To:
+ *		Prof. Leo Paulo Villarete
+ *		
+ * Purpose of Submission:
+ * 		Requirement for the subject:
+ * 		Applications Development and Emerging Technologies
  */
 
 package adet.mdascalculator;
@@ -14,26 +17,24 @@ import java.util.Scanner;
 public class Calculator {
 	static InfixToPostfix fix = new InfixToPostfix();
 	static Computer compute = new Computer();
-	
 	static Scanner sc = new Scanner(System.in);
 	static double total = 0D;
 	
+	/**
+	 * This method terminates the calculator program
+	 */
 	static void terminateProgram() {
 		sc.close();
-		System.out.println("\n.\n.\n.\n\nProgram Terminated.");
+		System.out.println("\nProgram Terminated.");
 		System.exit(1);
 	}
 	
-	static void outputTotal() { 
-		
-		/*
-		 * The accumulated is a double and this method
-		 * removes the '.0' when the accumulated has no
-		 * floating value. Returns undefined when the
-		 * result is NaN (Not a Number) and Infinite.
-		 * 
-		 */
-		
+	/**
+	 * The following method removes the '.0' when the accumulated
+	 * value has no floating value. Method also returns "undefined"
+	 * when the result is NaN (Not a Number) and Infinite
+	 */
+	static void outputTotal() {
 		if (Double.isNaN(total) || Double.isInfinite(total))
 			System.out.println("\n= undefined");
 		else if (total % 1 == 0.0)
@@ -41,15 +42,11 @@ public class Calculator {
 		else if (total % 1 != 0.0)
 			System.out.print("\n= " + total);
 	}
-		
+	
+	/**
+	 * This method validates if the equation is correct
+	 */
 	static boolean validateEquation(String[] equation) {
-		
-		/*
-		 * This validates if the equation is valid such that the variables
-		 * are 1 more than the signs [excluding: parenthesis, commas, and equals].
-		 *  
-		 */
-		
 		int countVariables = 0;
 		int countSigns = 0;
 		
@@ -68,14 +65,11 @@ public class Calculator {
 		return false;
 	}
 	
+	/**
+	 * This method gets the equation that the user wants
+	 * to perform
+	 */
 	static String[] getEquation(int inputs) {
-		
-		/*
-		 * Gets the equation that the user
-		 * wishes to perform.
-		 * 
-		 */
-		
 		int operand = 1;
 		int operator = 1;
 		String[] equation = new String[inputs * 2 - 1];
@@ -104,15 +98,14 @@ public class Calculator {
 		return equation;
 	}
 	
+	/**
+	 * This is the main method of the program
+	 */
 	public static void main(String[] args) {
 		ProcessBuilder cls = new ProcessBuilder("cmd", "/c", "cls");
 		String[] equation;
 		boolean execute = true;
 		int numberOfInputs = 0;
-		
-//		String[] temp = {"1", "-", "100", "*", "5", "^", "5", "/", "10000", "+", "30.25"};
-//		temp = fix.convertToPostfix(temp);
-//		compute.compute(temp);
 				
 		do {
 			try {

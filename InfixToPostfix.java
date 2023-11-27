@@ -2,12 +2,15 @@ package adet.mdascalculator;
 
 public class InfixToPostfix {
 	static InfixToPostfix fix = new InfixToPostfix();
-	static String[] tempEquation;								// Final equation
-	static String[] signs;										// Temporary stack for signs
+	static String[] tempEquation;								
+	static String[] signs;										
 	static int signsCount;
 	static int equationCount;
 	
-	public boolean isNumber(String value) {						// Checks if a string is valid number
+	/**
+	 * Checks if a string is a valid number
+	 */
+	public boolean isNumber(String value) {
 		try {
 			@SuppressWarnings("unused")
 			Double tempNumb = Double.parseDouble(value);
@@ -19,6 +22,9 @@ public class InfixToPostfix {
 		}
 	}
 	
+	/**
+	 * Checks if a string is a valid symbol
+	 */
 	public boolean isSymbol(String value) {
 		if (value.equals("/") ||
 			value.equals("*") ||
@@ -29,8 +35,11 @@ public class InfixToPostfix {
 			return true;
 		return false;
 	}
-		
-	static int checkPrecedence(String symbol) {					// Checks precedence for signs in stacking
+	
+	/**
+	 * Checks the precedence of signs in stacking
+	 */
+	static int checkPrecedence(String symbol) {
 		switch (symbol) {
 			case "-":
 			case "+":
@@ -46,21 +55,33 @@ public class InfixToPostfix {
 		}
 	}
 	
-	static String seek() {										// Checks the last value in the stack
+	/**
+	 * Checks the last value int the stack
+	 */
+	static String seek() {
 		return signs[signsCount-1];
 	}
 	
-	static void pop() {											// Removes the last value in the stack
+	/**
+	 * Removes the last value in the stack
+	 */
+	static void pop() {
 		tempEquation[equationCount++] = signs[signsCount-1];
 		signsCount--;
 	}
 	
-	static void popIncludeParenthesis() {						// Removes everything to the last parenthesis in the stack
+	/**
+	 * Removes everything to the last parenthesis in the stack
+	 */
+	static void popIncludeParenthesis() {
 		while (!seek().equals("("))
 			pop();
 	}	
 	
-	static void push(String symbol) {							// Pushes the sign in the stack
+	/**
+	 * Pushes the sign in the stack
+	 */
+	static void push(String symbol) {
 		if (symbol.equals(")"))
 			popIncludeParenthesis();
 		
@@ -73,14 +94,12 @@ public class InfixToPostfix {
 		}
 	}
 		
+	/**
+	 * Converts the proper equation to postfix notation so that
+	 * precedence of operations can easily be read by the computer.
+	 * 
+	 */
 	public String[] convertToPostfix(String[] foreignEquation) {
-		
-		/*
-		 * Converts the proper equation to postfix notation so that
-		 * precedence of operations can easily be read by the computer.
-		 * 
-		 */
-		
 		tempEquation = null;
 		signs = null;
 		signsCount = 0;
