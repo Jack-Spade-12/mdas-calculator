@@ -10,7 +10,7 @@
  * 		Applications Development and Emerging Technologies
  */
 
-package adet.scientificcalculator;
+package com.sc.project.scientificcalculator;
 import java.io.IOException;
 import java.util.Scanner;
 

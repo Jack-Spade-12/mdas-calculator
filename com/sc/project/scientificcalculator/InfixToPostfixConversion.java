@@ -1,4 +1,4 @@
-package adet.scientificcalculator;
+package com.sc.project.scientificcalculator;
 import java.util.ArrayList;
 
 public class InfixToPostfixConversion {
