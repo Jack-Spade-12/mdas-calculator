@@ -1,4 +1,4 @@
-package com.sc.project.scientificcalulator;
+package com.sc.project.scientificcalculator;
 import java.util.ArrayList;
 
 public class ProperEquationConversion {	
