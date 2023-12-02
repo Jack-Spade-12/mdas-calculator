@@ -18,11 +18,13 @@ import java.util.List;
 public class ValueChecker {
     private List<Character> specialCharacters = Arrays.asList('A', 'a');
     private List<Character> numberSeparators = Arrays.asList(',', '.');
-    private List<Character> symbols = Arrays.asList('(', ')', '/', '*', '^', '+', '%', 'r', 'R');
+    private List<Character> symbols = Arrays.asList('(', ')', '/', '*', '^', '+', '-', '%', 'r', 'R');
     private List<Character> groupers = Arrays.asList('(', ')');
+    private char minus = '-';
 
     /**
 	 * Checks if a character is a special value 'A' or 'a'
+     * 
 	 * @param value to check in form of <code>char</code>
 	 * @return <code>boolean</code>
 	 */
@@ -32,6 +34,7 @@ public class ValueChecker {
 
     /**
 	 * Checks if a string is a special value 'A' or 'a'
+     * 
 	 * @param value to check in form of <code>String</code>
 	 * @return <code>boolean</code>
 	 */
@@ -42,6 +45,7 @@ public class ValueChecker {
 	/**
 	 * Checks if a character is a digit or a number separator:
      * period (<code>.</code>) or comma (<code>,</code>)
+     * 
 	 * @param value to check in form of <code>char</code>
 	 * @return <code>boolean</code>
 	 */
@@ -52,15 +56,17 @@ public class ValueChecker {
     /**
 	 * Checks if a string is a digit or a number separator:
      * period (<code>.</code>) or comma (<code>,</code>)
+     * 
 	 * @param value to check in form of <code>char</code>
 	 * @return <code>boolean</code>
 	 */
 	public boolean isDigit(String value) {
-		return value.length() == 1 || isDigit(value.charAt(0));
+		return value.length() == 1 && isDigit(value.charAt(0));
 	}
 	
 	/**
-     * Checks if a character is a symbol.
+     * Checks if a character is a symbol
+     * 
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
@@ -69,7 +75,8 @@ public class ValueChecker {
     }
 
     /**
-     * Checks if a string is a symbol.
+     * Checks if a string is a symbol
+     * 
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
@@ -78,8 +85,29 @@ public class ValueChecker {
     }
 
     /**
+     * Checks is character is a minus (<code>-</code>)
+     * 
+     * @param value to check in form of <code>char</code>
+     * @return boolean
+     */
+    public boolean isMinus(char value) {
+        return value == minus;
+    }
+
+    /**
+     * Checks is string is a minus (<code>-</code>)
+     * 
+     * @param value to check in form of <code>String</code>
+     * @return boolean
+     */
+    public boolean isMinus(String value) {
+        return value.length() == 1 && isMinus(value.charAt(0));
+    }
+
+    /**
      * Checks if a character is a grouper: open parenthesis
-     * (<code>(</code>) or closed parenthesis (<code>)</code>).
+     * (<code>(</code>) or closed parenthesis (<code>)</code>)
+     * 
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
@@ -89,7 +117,8 @@ public class ValueChecker {
 
     /**
      * Checks if a string is a grouper: open parenthesis
-     * (<code>(</code>) or closed parenthesis (<code>)</code>).
+     * (<code>(</code>) or closed parenthesis (<code>)</code>)
+     * 
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
@@ -98,13 +127,15 @@ public class ValueChecker {
     }
 
     /**
-	 * Checks if a string is a valid number.
+	 * Checks if a string is a valid number
+     * 
 	 * @param value to check in form of <code>String</code>
 	 * @return <code>boolean</code>
 	 */
 	public boolean isNumber(String value) {
-		try {
-			Double.parseDouble(value);
+        try {
+            // Remove commas ( , )
+            Double.parseDouble(value.replace(",", ""));
 			return true;
 		}
 		catch (NumberFormatException e) {
