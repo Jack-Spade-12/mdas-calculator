@@ -141,5 +141,8 @@ public class ValueChecker {
 		catch (NumberFormatException e) {
 			return false;
 		}
+        catch (NullPointerException e) {
+            return false;
+        }
 	}
 }
