@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public class EquationExtractor {
 	
 	private ValueChecker value = new ValueChecker();
-	private StringBuilder temporary = new StringBuilder();
-	private List<String> equationList = new ArrayList<String>();
+	private StringBuilder temporary;
+	private List<String> equationList;
 	
 	/**
 	 * This method converts a whole <code>String</code> 
@@ -30,6 +30,8 @@ public class EquationExtractor {
 	 */
 	public String[] convertToProperEquation(String equation) {
 		
+		temporary = new StringBuilder();
+		equationList = new ArrayList<String>();
 		char[] equationCharArray = equation.toCharArray();
 		
 		// Determines which characters should be grouped together to create a number
@@ -72,7 +74,7 @@ public class EquationExtractor {
 			}
 		}
 		
-		pushToList('\0');
+		pushToList(' ');
 
 		return equationList.toArray(new String[equationList.size()]);	
 	}
@@ -101,6 +103,11 @@ public class EquationExtractor {
 	 * @return String
 	 */
 	private String peekList() {
-		return equationList.get(equationList.size() - 1);
+		try {
+			return equationList.get(equationList.size() - 1);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 }
