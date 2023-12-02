@@ -1,56 +1,35 @@
+/**
+ * History
+ * 		
+ * 		December 2, 2023 - S. Cortel - Modified
+ * 
+ * Purpose
+ * 		
+ * 		This class converts an equation's notation
+ *      to postfix notation for easier computation.
+ *      
+ */
 package com.sc.project.scientificcalculator;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InfixToPostfixConversion {
-	static ProperEquationConversion equate = new ProperEquationConversion();
-	static ArrayList<String> signs = new ArrayList<String>();
-	static ArrayList<String> tempEquation = new ArrayList<String>();
-	static int size = 0;
-	
-	public boolean isDigit(char value) {					// Checks if a digit is a number or a '.'
-		if (Character.isDigit(value) || value == '.')		// The program considers the '.' as part of
-			return true;									// number, especially when calculating
-		return false;										// floating values.
-	}
-	
-	public boolean isDigit(String value) {					// Checks if the string is a number
-		try {
-			@SuppressWarnings("unused")
-			Double temp1 = Double.parseDouble(value);
-			return true;
-		}
-		
-		catch (NumberFormatException e) {
-			return false;
-		}
-	}
-	
-	public boolean isSymbol(String value) {
-		if (value.equals("/") ||
-			value.equals("*") ||
-			value.equals("^") ||
-			value.equals("+") ||
-			value.equals("-") ||
-			value.equals("%"))
-			return true;
-		return false;
-	}
-	
-	public boolean isSymbol(char value) {
-		if (value == '/' ||
-			value == '*' ||
-			value == '^' ||
-			value == '+' ||
-			value == '-' ||
-			value == '%')
-			return true;
-		return false;
-	}
 
+    private ValueChecker valueChecker = new ValueChecker();
+	private List<String> tempEquation;
+	private List<String> signs;
 	
-	static int checkPrecedence(String symbol) {
+    /**
+     * Gets the precedence of symbols
+     * 
+     * @param symbol to check in form of <code>char</code>
+     * @return <code>int</code> precedence
+     */
+	static int getPrecedence(String symbol) {
 		switch (symbol) {
-			case "-":
+            case ")":
+                return 0;
+            case "-":
 			case "+":
 				return 1;
 			case "*":
@@ -62,69 +41,70 @@ public class InfixToPostfixConversion {
 			case "r":
 			case "R":
 				return 4;
+            case "(":
+                return 5;
 			default:
-				return 0;
+                return -2;
 		}
 	}
 	
-	static String seek() {									// Checks the last sign in the sign stack
-		return signs.get(signs.size()-1);
+    /**
+     * Checks the last sign in the sign stack
+     */
+	private String peek() {
+        if (signs.size() == 0) {
+            return "\0";
+        }
+		return signs.get(signs.size() - 1);
 	}
 	
-	static void popIncludeParenthesis() {					// Pop including the first parenthesis
-		while (!seek().equals("("))
-			pop();
-		signs.remove(signs.size()-1);
+    /**
+     * Pop the sign stack
+     */
+	private void pop() {
+        // Do not include grouper characters in the equation
+        if (!valueChecker.isGrouper(peek())) {
+            tempEquation.add(signs.get(signs.size() - 1));
+        }
+        signs.remove(signs.size() - 1);
 	}
 	
-	static void popTilParenthesis() {						// Pop until it reaches a parenthesis
-		while (!seek().equals("("))
-			pop();
+    /**
+     * Push the sign into the sign stack
+     */
+	private void push(String symbol) {
+		if (getPrecedence(peek()) > getPrecedence(symbol)) {
+            pop();
+            push(symbol);
+        }
+        else {
+            signs.add(symbol);
+        }
 	}
 	
-	static void pop() {										// Removes the last sign in the stack
-		if (!(seek().equals("(")) && !(seek().equals(")")))
-			tempEquation.add(signs.get(signs.size()-1));
-		signs.remove(signs.size()-1);
-	}
-				
-	static void push(String symbol) {						// Pushes the sign into the stack
-		if (symbol.equals(")"))
-			popIncludeParenthesis();
-		else if (symbol.equals(","))
-			popTilParenthesis();
-		else if (symbol.equals("("))
-			signs.add(symbol);
-		else if (checkPrecedence(symbol) > checkPrecedence(seek()))
-			signs.add(symbol);
-		else if (checkPrecedence(symbol) <= checkPrecedence(seek())){
-			pop();
-			push(symbol);
-		}	
-	}
+    /**
+     * Converts the proper equation to postfix notation so that
+     * precedence of operations can easily be read by the computer
+     * 
+     * @param equation to convert to postfix notation in form
+     * of <code>String[]</code>
+     * @return <code>String[]</code> equation in postfix notation
+     */
+	public String[] convertToPostfix(String[] equation) {
 		
-	public String[] convertToPostfix(String[] foreignEquation) {
+		tempEquation = new ArrayList<String>();
+		signs = new ArrayList<String>();
 		
-		/*
-		 * Converts the proper equation to postfix notation so that
-		 * precedence of operations can easily be read by the computer.
-		 * 
-		 */
-		
-		tempEquation.clear();
-		signs.clear();
-		
-		signs.add("(");
-		for (String i : foreignEquation) {
-			
-			if (equate.isDigit(i))
-				tempEquation.add(i);
-			
-			else if (equate.isSymbol(i))
-				push(i);
-			
-			else if (equate.isSpecial(i.charAt(0)))
-				tempEquation.add(String.valueOf(Calculator.accumulated));
+		push("(");
+		for (String equationSegment : equation) {
+            // Push symbols to sign stack
+			if (valueChecker.isSymbol(equationSegment)) {
+                push(equationSegment);
+            }
+            // Push non-symbols to equation stack
+            else {
+                tempEquation.add(equationSegment);
+            }
 		}
 		push(")");
 
