@@ -1,1 +1,1 @@
-# mdas-calculator
+# scientific-calculator
