@@ -10,7 +10,6 @@
  *      number, special character, digit, or symbol.
  *      
  */
-
 package com.sc.project.scientificcalculator;
 import java.util.Arrays;
 import java.util.List;

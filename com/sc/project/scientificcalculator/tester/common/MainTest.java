@@ -9,13 +9,15 @@
  *      
  */
 package com.sc.project.scientificcalculator.tester.common;
-
-import com.sc.project.scientificcalculator.tester.ValueCheckerTest;
+import com.sc.project.scientificcalculator.tester.*;
 
 public class MainTest {
     
     public MainTest() {
-        // new ValueCheckerTest();
+        new ValueCheckerTest();
+        new EquationExtractorTest();
+        new InfixToPostfixConversionTest();
+        new ComputerTest();
     }
 
 }
