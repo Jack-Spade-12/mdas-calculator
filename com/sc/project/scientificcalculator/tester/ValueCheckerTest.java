@@ -27,6 +27,7 @@ public class ValueCheckerTest {
         isSymbol();
         isMinus();
         isGrouper();
+        isEquals();
         isNumber();
         System.out.println("\nValue Checker Test End");
     }
@@ -200,7 +201,7 @@ public class ValueCheckerTest {
         actualResult = valueChecker.isMinus(inputString);
         assertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 4");
     }
-
+    
     /**
      * Tests the isGrouper() method
      */
@@ -239,6 +240,36 @@ public class ValueCheckerTest {
         expectedResult = false;
         actualResult = valueChecker.isGrouper(inputString);
         assertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 6");
+    }
+
+    /**
+     * Tests the isEquals() method
+     */
+    private void isEquals() {
+        char inputChar;
+        String inputString;
+        boolean expectedResult;
+        boolean actualResult;
+
+        inputChar = '=';
+        expectedResult = true;
+        actualResult = valueChecker.isEquals(inputChar);
+        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 1");
+
+        inputChar = '.';
+        expectedResult = false;
+        actualResult = valueChecker.isEquals(inputChar);
+        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 2");
+
+        inputString = "=";
+        expectedResult = true;
+        actualResult = valueChecker.isEquals(inputString);
+        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 3");
+
+        inputString = ".";
+        expectedResult = false;
+        actualResult = valueChecker.isEquals(inputString);
+        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 4");
     }
 
     /**
