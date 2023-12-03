@@ -69,14 +69,28 @@ public class EquationExtractorTest {
         input = "-5 + 56 + -4.1";
         expectedResult.addAll(Arrays.asList("-5", "+", "56", "+", "-4.1"));
         actualResult.addAll(Arrays.asList(equationExtractor.convertToProperEquation(input)));
-        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 4");
+        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 5");
         expectedResult.clear();
         actualResult.clear();
 
         input = "-(1)";
         expectedResult.addAll(Arrays.asList("-", "(", "1", ")"));
         actualResult.addAll(Arrays.asList(equationExtractor.convertToProperEquation(input)));
-        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 4");
+        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 6");
+        expectedResult.clear();
+        actualResult.clear();
+
+        input = "-(1 + 1 = )";
+        expectedResult.addAll(Arrays.asList("-", "(", "1", "+", "1", "=", ")"));
+        actualResult.addAll(Arrays.asList(equationExtractor.convertToProperEquation(input)));
+        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 7");
+        expectedResult.clear();
+        actualResult.clear();
+
+        input = "1+1=";
+        expectedResult.addAll(Arrays.asList("1", "+", "1", "="));
+        actualResult.addAll(Arrays.asList(equationExtractor.convertToProperEquation(input)));
+        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8cls");
         expectedResult.clear();
         actualResult.clear();
     }

@@ -71,6 +71,11 @@ public class EquationExtractor {
 			else if (value.isSpecial(equationChar)) {
 				pushToList(equationChar);
 			}
+			
+			// Equal sign
+			else if (value.isEquals(equationChar)) {
+				pushToList(equationChar);
+			}
 		}
 		
 		pushToList(' ');
