@@ -20,6 +20,7 @@ public class ValueChecker {
     private List<Character> symbols = Arrays.asList('(', ')', '/', '*', '^', '+', '-', '%', 'r', 'R');
     private List<Character> groupers = Arrays.asList('(', ')');
     private char minus = '-';
+    private char equals = '=';
 
     /**
 	 * Checks if a character is a special value 'A' or 'a'
@@ -123,6 +124,26 @@ public class ValueChecker {
      */
     public boolean isGrouper(String value) {
         return value.length() == 1 && isGrouper(value.charAt(0));
+    }
+
+    /**
+     * Checks is character is an equal sign (<code>=</code>)
+     * 
+     * @param value to check in form of <code>char</code>
+     * @return boolean
+     */
+    public boolean isEquals(char value) {
+        return value == '=';
+    }
+
+    /**
+     * Checks is character is an equal sign (<code>=</code>)
+     * 
+     * @param value to check in form of <code>String</code>
+     * @return boolean
+     */
+    public boolean isEquals(String value) {
+        return value.length() == 1 && isEquals(value.charAt(0));
     }
 
     /**
