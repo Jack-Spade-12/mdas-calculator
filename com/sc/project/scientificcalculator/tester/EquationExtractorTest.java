@@ -9,7 +9,6 @@
  *      
  */
 package com.sc.project.scientificcalculator.tester;
-
 import com.sc.project.scientificcalculator.EquationExtractor;
 import com.sc.project.scientificcalculator.tester.common.AssertUnit;
 import java.util.ArrayList;

@@ -10,7 +10,6 @@
  *      `assert`-ion even before compilation.
  *      
  */
-
 package com.sc.project.scientificcalculator.tester.common;
 
  public class AssertUnit {
