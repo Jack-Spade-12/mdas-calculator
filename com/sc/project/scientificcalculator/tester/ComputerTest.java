@@ -8,7 +8,6 @@
  * 		Tester class for scientificcalculator.Computer
  * 
  */
-
 package com.sc.project.scientificcalculator.tester;
 import com.sc.project.scientificcalculator.Computer;
 import com.sc.project.scientificcalculator.tester.common.AssertUnit;
