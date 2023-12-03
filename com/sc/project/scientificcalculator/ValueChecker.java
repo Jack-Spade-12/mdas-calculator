@@ -133,7 +133,7 @@ public class ValueChecker {
      * @return boolean
      */
     public boolean isEquals(char value) {
-        return value == '=';
+        return value == equals;
     }
 
     /**
