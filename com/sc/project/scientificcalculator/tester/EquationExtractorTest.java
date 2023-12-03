@@ -9,11 +9,12 @@
  *      
  */
 package com.sc.project.scientificcalculator.tester;
-import com.sc.project.scientificcalculator.EquationExtractor;
-import com.sc.project.scientificcalculator.tester.common.AssertUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.sc.project.scientificcalculator.EquationExtractor;
+import com.sc.project.scientificcalculator.tester.common.AssertUnit;
 
 public class EquationExtractorTest {
     

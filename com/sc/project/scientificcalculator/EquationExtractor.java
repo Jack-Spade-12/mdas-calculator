@@ -9,10 +9,9 @@
  * 		used for computing.
  * 
  */
-
 package com.sc.project.scientificcalculator;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EquationExtractor {
 	
