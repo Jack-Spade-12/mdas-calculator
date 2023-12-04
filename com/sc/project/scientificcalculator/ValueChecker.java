@@ -147,6 +147,15 @@ public class ValueChecker {
     }
 
     /**
+     * Returns the equal sign
+     * 
+     * @return <code>String</code>
+     */
+    public String getEquals() {
+        return String.valueOf(equals);
+    }
+
+    /**
 	 * Checks if a string is a valid number
      * 
 	 * @param value to check in form of <code>String</code>
