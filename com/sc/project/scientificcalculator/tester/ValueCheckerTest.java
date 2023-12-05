@@ -25,6 +25,7 @@ public class ValueCheckerTest {
         isSpecial();
         isDigit();
         isSymbol();
+        isRootOperator();
         isMinus();
         isGrouper();
         isEquals();
@@ -170,6 +171,35 @@ public class ValueCheckerTest {
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputString);
         assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 8");
+    }
+
+    /**
+     * Tests the isRootOperator() method
+     */
+    private void isRootOperator() {
+        char input;
+        boolean expectedResult;
+        boolean actualResult;
+
+        input = 'r';
+        expectedResult = true;
+        actualResult = valueChecker.isRootOperator(input);
+        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 1");
+
+        input = 'R';
+        expectedResult = true;
+        actualResult = valueChecker.isRootOperator(input);
+        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 2");
+
+        input = 's';
+        expectedResult = false;
+        actualResult = valueChecker.isRootOperator(input);
+        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 3");
+
+        input = 'S';
+        expectedResult = false;
+        actualResult = valueChecker.isRootOperator(input);
+        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 4");
     }
 
     /**
