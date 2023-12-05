@@ -19,9 +19,10 @@ public class ValueChecker {
     private List<Character> numberSeparators = Arrays.asList(',', '.');
     private List<Character> symbols = Arrays.asList('(', ')', '/', '*', '^', '+', '-', '%', 'r', 'R');
     private List<Character> groupers = Arrays.asList('(', ')');
+    private List<Character> rootOperators = Arrays.asList( 'R', 'r');
     private char minus = '-';
     private char equals = '=';
-
+    
     /**
 	 * Checks if a character is a special value 'A' or 'a'
      * 
@@ -85,7 +86,29 @@ public class ValueChecker {
     }
 
     /**
-     * Checks is character is a minus (<code>-</code>)
+     * Checks if <code>char</code> is a root operator (<code>r</code>) or 
+     * (<code>R</code>)
+     * 
+     * @param value to check in form of <code>char</code>
+     * @return boolean
+     */
+    public boolean isRootOperator(char value) {
+        return rootOperators.contains(value);
+    }
+
+    /**
+     * Checks if <code>String</code> is a root operator (<code>r</code>) or 
+     * (<code>R</code>)
+     * 
+     * @param value to check in form of <code>String</code>
+     * @return boolean
+     */
+    public boolean isRootOperator(String value) {
+        return isRootOperator(value.charAt(0));
+    }
+
+    /**
+     * Checks if a character is a minus (<code>-</code>)
      * 
      * @param value to check in form of <code>char</code>
      * @return boolean
@@ -95,7 +118,7 @@ public class ValueChecker {
     }
 
     /**
-     * Checks is string is a minus (<code>-</code>)
+     * Checks if a string is a minus (<code>-</code>)
      * 
      * @param value to check in form of <code>String</code>
      * @return boolean
