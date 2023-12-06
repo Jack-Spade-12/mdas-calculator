@@ -2,6 +2,7 @@
  * History
  * 		
  * 		December 2, 2023 - S. Cortel - Created
+ *      December 7, 2023 - S. Cortel - Added isOperator()
  * 
  * Purpose
  * 		
@@ -25,6 +26,7 @@ public class ValueCheckerTest {
         isSpecial();
         isDigit();
         isSymbol();
+        isOperator();
         isRootOperator();
         isMinus();
         isGrouper();
@@ -171,6 +173,51 @@ public class ValueCheckerTest {
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputString);
         assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 8");
+    }
+
+    /**
+     * Tests the isOperator() method
+     */
+    private void isOperator() {
+        char input;
+        String inputString;
+        boolean expectedResult;
+        boolean actualResult;
+
+        input = 'r';
+        expectedResult = true;
+        actualResult = valueChecker.isOpertor(input);
+        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 1");
+
+        input = '/';
+        expectedResult = true;
+        actualResult = valueChecker.isOpertor(input);
+        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 2");
+
+        input = '(';
+        expectedResult = false;
+        actualResult = valueChecker.isOpertor(input);
+        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 3");
+
+        inputString = "r";
+        expectedResult = true;
+        actualResult = valueChecker.isOpertor(inputString);
+        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 4");
+
+        inputString = "/";
+        expectedResult = true;
+        actualResult = valueChecker.isOpertor(inputString);
+        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 5");
+
+        inputString = "(";
+        expectedResult = false;
+        actualResult = valueChecker.isOpertor(inputString);
+        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 6");
+
+        inputString = "1 + 1";
+        expectedResult = false;
+        actualResult = valueChecker.isOpertor(inputString);
+        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 7");
     }
 
     /**
