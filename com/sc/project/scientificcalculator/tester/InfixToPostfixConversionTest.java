@@ -2,6 +2,7 @@
  * History
  * 		
  * 		December 3, 2023 - S. Cortel - Created
+ *      December 7, 2023 - S. Cortel - Converted String[] to List<String>
  * 
  * Purpose
  * 		
@@ -37,7 +38,7 @@ public class InfixToPostfixConversionTest {
 
         input.addAll(Arrays.asList("1", "+", "1"));
         expectedResult.addAll(Arrays.asList("1", "1", "+"));
-        actualResult.addAll(Arrays.asList(infixToPostfixConversion.convertToPostfix(input.toArray(new String[input.size()]))));
+        actualResult.addAll(infixToPostfixConversion.convertToPostfix(input));
         assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 1");
         input.clear();
         expectedResult.clear();
@@ -45,7 +46,7 @@ public class InfixToPostfixConversionTest {
 
         input.addAll(Arrays.asList("2", "*", "5", "+", "(", "10", "-", "2", ")"));
         expectedResult.addAll(Arrays.asList("2", "5", "*", "10", "2", "-", "+"));
-        actualResult.addAll(Arrays.asList(infixToPostfixConversion.convertToPostfix(input.toArray(new String[input.size()]))));
+        actualResult.addAll(infixToPostfixConversion.convertToPostfix(input));
         assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 2");
         input.clear();
         expectedResult.clear();
@@ -53,7 +54,7 @@ public class InfixToPostfixConversionTest {
 
         input.addAll(Arrays.asList("r", "(", "16,", "R", "(", "4,", "2", ")", ")", "*", "4", "-", "2"));
         expectedResult.addAll(Arrays.asList("16,", "4,", "2", "R", "r", "4", "*", "2", "-"));
-        actualResult.addAll(Arrays.asList(infixToPostfixConversion.convertToPostfix(input.toArray(new String[input.size()]))));
+        actualResult.addAll(infixToPostfixConversion.convertToPostfix(input));
         assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 2");
         input.clear();
         expectedResult.clear();

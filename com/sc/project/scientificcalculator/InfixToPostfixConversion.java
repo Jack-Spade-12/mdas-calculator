@@ -4,6 +4,9 @@
  * 		December 2, 2023 - S. Cortel - Modified
  *      December 7, 2023 - S. Cortel - Made sure non-symbols and non-numbers were
  *                                     not allowed to be added to any stack
+ *      December 7, 2023 - S. Cortel - Removed the dependence to String[] and
+ *                                     converted to List<String>, also utilized
+ *                                     Stack<String> for the signs     
  * 
  * Purpose
  * 		
@@ -13,14 +16,25 @@
  */
 package com.sc.project.scientificcalculator;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.List;
+import java.util.Stack;
 
 public class InfixToPostfixConversion {
 
     private ValueChecker valueChecker = new ValueChecker();
 	private List<String> tempEquation;
-	private List<String> signs;
+	private Stack<String> signs;
 	
+    /**
+     * Constructor of the class
+     */
+    public InfixToPostfixConversion() {
+        valueChecker = new ValueChecker();
+        tempEquation = new ArrayList<String>();
+        signs = new Stack<String>();
+    }
+
     /**
      * Gets the precedence of symbols
      * 
@@ -46,41 +60,42 @@ public class InfixToPostfixConversion {
             case "(":
                 return 5;
 			default:
-                return -2;
+                return -1;
 		}
 	}
 	
     /**
-     * Checks the last sign in the sign stack
-     */
-	private String peek() {
-        if (signs.size() == 0) {
-            return "\0";
-        }
-		return signs.get(signs.size() - 1);
-	}
-	
-    /**
-     * Pop the sign stack
+     * Pop the sign stack and add to the equation <code>List</code>
      */
 	private void pop() {
         // Do not include grouper characters in the equation
-        if (!valueChecker.isGrouper(peek())) {
-            tempEquation.add(signs.get(signs.size() - 1));
+        if (valueChecker.isGrouper(signs.peek())) {
+            signs.pop();
         }
-        signs.remove(signs.size() - 1);
+        else {
+            tempEquation.add(signs.pop());
+        }
 	}
 	
     /**
-     * Push the sign into the sign stack
+     * Pushes the symbol into the sign stack. Ensure that 
+     * precedence of symvbols is always incrementing.
+     * 
+     * @param symbol to push in the <code>Stack</code>
      */
 	private void push(String symbol) {
-        if (getPrecedence(peek()) > getPrecedence(symbol)) {
-            pop();
-            push(symbol);
+        try {
+            if (getPrecedence(signs.peek()) > getPrecedence(symbol)) {
+                pop();
+                push(symbol);
+            }
+            else {
+                signs.push(symbol);
+            }
         }
-        else {
-            signs.add(symbol);
+        // Stack is empty
+        catch (EmptyStackException e) {
+            signs.push(symbol);
         }
 	}
 	
@@ -89,15 +104,15 @@ public class InfixToPostfixConversion {
      * precedence of operations can easily be read by the computer
      * 
      * @param equation to convert to postfix notation in form
-     * of <code>String[]</code>
-     * @return <code>String[]</code> equation in postfix notation
+     * of <code>List</code>
+     * @return <code>List</code> equation in postfix notation
      */
-	public String[] convertToPostfix(String[] equation) {
+	public List<String> convertToPostfix(List<String> equation) {
 		
-		tempEquation = new ArrayList<String>();
-		signs = new ArrayList<String>();
-		
-		push("(");
+        tempEquation.clear();
+        signs.clear();
+
+        push("(");
 		for (String equationSegment : equation) {
             // Push symbols to sign stack
 			if (valueChecker.isSymbol(equationSegment)) {
@@ -110,6 +125,6 @@ public class InfixToPostfixConversion {
 		}
 		push(")");
 
-		return tempEquation.toArray(new String[tempEquation.size()]);
+		return tempEquation;
 	}
 }
