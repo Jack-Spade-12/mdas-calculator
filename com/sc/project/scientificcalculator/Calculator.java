@@ -9,7 +9,7 @@
  * Purpose
  * 		
  * 		Base program for the calculator
- * 
+ *      Hello World!
  */
 
 package com.sc.project.scientificcalculator;
