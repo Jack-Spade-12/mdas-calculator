@@ -2,6 +2,7 @@
  * History
  * 		
  * 		December 2, 2023 - S. Cortel - Created
+ *      December 7, 2023 - S. Cortel - Added isOperator() method
  * 
  * Purpose
  * 		
@@ -20,6 +21,7 @@ public class ValueChecker {
     private List<Character> symbols = Arrays.asList('(', ')', '/', '*', '^', '+', '-', '%', 'r', 'R');
     private List<Character> groupers = Arrays.asList('(', ')');
     private List<Character> rootOperators = Arrays.asList( 'R', 'r');
+    private List<Character> operators = Arrays.asList('/', '*', '^', '+', '-', '%', 'r', 'R');
     private char minus = '-';
     private char equals = '=';
     
@@ -83,6 +85,26 @@ public class ValueChecker {
      */
     public boolean isSymbol(String value) {
         return value.length() == 1 && isSymbol(value.charAt(0));
+    }
+
+    /**
+     * Checks if a character is an operator
+     * 
+     * @param value to check in form of <code>char</code>
+     * @return boolean
+     */
+    public boolean isOpertor(char value) {
+        return operators.contains(value);
+    }
+
+    /**
+     * Checks if a string is a symbol
+     * 
+     * @param value to check in form of <code>String</code>
+     * @return boolean
+     */
+    public boolean isOpertor(String value) {
+        return value.length() == 1 && isOpertor(value.charAt(0));
     }
 
     /**
