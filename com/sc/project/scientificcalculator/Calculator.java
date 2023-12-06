@@ -3,6 +3,8 @@
  * 		
  * 		December 4, 2023 - S. Cortel - Modified
  *      December 5, 2023 - S. Cortel - Modified
+ *      December 6, 2023 - S. Cortel - Modified
+ *      December 7, 2023 - S. Cortel - Modified
  * 
  * Purpose
  * 		
@@ -11,7 +13,6 @@
  */
 
 package com.sc.project.scientificcalculator;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,10 @@ public class Calculator {
     // Stores result of calculations
 	private double accumulated = 0D;										
 	
-    public void runCalculator() throws InterruptedException, IOException {
+    /**
+     * This method is the main method of the class
+     */
+    public void runCalculator() {
 		String userInput;		
 		printHeader();
         printHelp();
@@ -38,10 +42,6 @@ public class Calculator {
             System.out.print("\n: ");
 			userInput = scanner.nextLine();
 			processInput(userInput);
-            
-            // Continuously print out the equation
-            System.out.print("Equation : ");
-            printAccumulated();
 		}
         while (isContinue(userInput));
 
@@ -77,8 +77,8 @@ public class Calculator {
 						+ "To perform root operations,                  \n"
 						+ "input: r(BASE, EXPONENT)                     \n\n"
 
-						+ "To perform nested root operations,           \n"
-						+ "use a singline-line input calculation.       \n\n"
+						// + "To perform nested root operations,           \n"
+						// + "use a single-line input calculation.         \n\n"
 
 						+ "This calculator accepts single               \n"
 						+ "line input and multiple                      \n"
@@ -101,41 +101,57 @@ public class Calculator {
      */
     private void processInput(String userInput) {
         String[] segmentedEquation = equationExtractor.convertToProperEquation(userInput);
+        String[] fullEquation;
         int equalSignPosition = getEqualSignPosition(segmentedEquation);
-        
+         
         // Check if accumulate or compute
         // Compute
         if (equalSignPosition > -1) {
 
             // Check that equal sign is not in the middle of the equation
             if (equalSignPosition < segmentedEquation.length - 1) {
-                throwInvalidEquationError(segmentedEquation);
+                throwInvalidInputError("Equal sign must be at the end of the equation", 
+                    segmentedEquation);
                 System.out.println("Last inputs are discarded.");
                 return;
             }
             
             // Accumulate
             accumulatedInputs.addAll(Arrays.asList(segmentedEquation));
-            
+
+            // Convert List to String[]
+            fullEquation = accumulatedInputs.toArray(new String[accumulatedInputs.size()]);
+
             // Polish equation and check if valid
-            if (validateEquation(segmentedEquation)) {
+            if (validateEquation(fullEquation)) {
                 
+                // Print the equation
+                System.out.print("> ");
+                printCurrentInput(fullEquation);
+
                 // Convert equation to postfix notation
-                segmentedEquation = infixToPostfixConversion
-                    .convertToPostfix(accumulatedInputs.toArray(
-                    new String[accumulatedInputs.size()]));
+                fullEquation = infixToPostfixConversion.convertToPostfix(fullEquation);
 
                 // Compute the equation
-                computeEquation(segmentedEquation);
-
+                computeEquation(fullEquation);
+                
                 // Output the equation
                 outputAccumulated();
+                return;
+            }
+            // Exit method when formula fails
+            else {
+                return;
             }
         }
         // Accumulate only
         else {
             accumulatedInputs.addAll(Arrays.asList(segmentedEquation));
         }
+
+        // Continuously print out the equation
+        System.out.print("> ");
+        printAccumulated();
     }
 
     /**
@@ -159,30 +175,28 @@ public class Calculator {
     }
 
     /**
-     * Throws an error in the equation.
+     * Shows an error message in the calculator and clears accumulated input
      * 
-     * @param values to be added to error in form of <code>String[]</code>
+     * @param errorMessage to show in the calculator in form of <code>String</code>
      */
-    private void throwInvalidEquationError(String[] values) {
-        System.out.print("Invalid Formula: ");
-        
-        printAccumulated(false);
-        printCurrentInput(values);
+    private void throwInvalidEquationError(String errorMessage) {
+        System.out.println("Invalid Formula: " + errorMessage);
+        printAccumulated();
+        accumulatedInputs.clear();
+        System.out.println("Calculator has been cleared");
     }
 
     /**
-     * Throws an error in the equation.
+     * Shows an error message in the calculator and clears latest input
      * 
-     * @param operators count to be added to error in form of <code>int</code>
-     * @param operands count to be added to error in form of <code>int</code>
+     * @param errorMessage to show in the calculator in form of <code>String</code>
+     * @param inputValues recently added
      */
-    private void throwInvalidEquationError(int operators, int operands) {
-        System.out.println("Operator " + operators + " to operand " + operands + " ratio is not correct");
-        
-        throwInvalidEquationError(null);
-
-        accumulatedInputs.clear();
-        System.out.println("Calculator has been reset");
+    private void throwInvalidInputError(String errorMessage, String[] inputValues) {
+        System.out.println("Invalid Input: " + errorMessage);
+        printAccumulated(false);
+        printCurrentInput(inputValues);
+        System.out.println("Input values has been cleared");
     }
 
     /**
@@ -230,43 +244,70 @@ public class Calculator {
      *  1. Converting 'A' or 'a' to accumulated
      *  2. Adding '*' characters in between numbers and parenthesis
      *  3. Counts operators and operands such that operators == operands - 1
+     *  4. Make sure that root operatos are followed by open parenthesis
+     *  5. Make sure that there are equal numbers of open and close parenthesis
      */
     private boolean validateEquation(String[] segmentedEquation) {
         int operands = 0;
         int operators = 0;
+        int closeParenthesisCount = 0;
+        int openParenthesisCount = 0;
         String[] equation = segmentedEquation;
         int equationLength = equation.length;
         
-        for (int i = 0; i < equationLength; i++) {
-            // Special
-            if (valueChecker.isSpecial(equation[i])) {
-                equation[i] = String.valueOf(accumulated);
-                operands++;
-            }
-            // Numbers
-            else if (valueChecker.isNumber(equation[i])) {
-                operands++;
-            }
-            // Operators
-            else if (valueChecker.isSymbol(equation[i]) && !valueChecker.isGrouper(equation[i])) {
-                operators++;
-            }
-            // Groupers
-            else if (valueChecker.isGrouper(equation[i])) {
-                if ( (i > 0 && valueChecker.isNumber(equation[i - 1])) || 
-                     (i + 1 < equationLength && valueChecker.isNumber(equation[i + 1])) ) {
-                    equation = addValueAtIndex(equation, "*", i);
-                    equationLength++;
+        try {
+            for (int i = 0; i < equationLength; i++) {
+                // Special
+                if (valueChecker.isSpecial(equation[i])) {
+                    equation[i] = String.valueOf(accumulated);
+                    operands++;
+                }
+                // Numbers
+                else if (valueChecker.isNumber(equation[i])) {
+                    operands++;
+                }
+                // Operators
+                else if (valueChecker.isSymbol(equation[i]) && !valueChecker.isGrouper(equation[i])) {
+                    operators++;
+                }
+                // Groupers
+                else if (valueChecker.isGrouper(equation[i])) {
+                    if ( (i > 0 && valueChecker.isNumber(equation[i - 1])) || 
+                        (i + 1 < equationLength && valueChecker.isNumber(equation[i + 1])) ) {
+                        equation = addValueAtIndex(equation, "*", i);
+                        equationLength++;
+                    }
+
+                    // Count open parentheses
+                    if (equation[i].compareTo("(") == 0) {
+                        openParenthesisCount++;
+                    }
+                    // Count close parentheses
+                    else if (equation[i].compareTo(")") == 0) {
+                        closeParenthesisCount++;
+                    }
                 }
             }
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            throwInvalidEquationError("Equation is incomplete.");
+            return false;
         }
 
         accumulatedInputs.clear();
         accumulatedInputs.addAll(Arrays.asList(equation));
 
-        // Throw error and reset if equation is not correct
+        // Throw error and reset if operators and operators are not rational
         if (operators != operands - 1) {
-            throwInvalidEquationError(operators, operands);
+            throwInvalidEquationError(
+                "Ratio between operands and operators are not correct.");
+            return false;
+        }
+
+        // Throw error if open and close parenthsis are not equal
+        if (openParenthesisCount != closeParenthesisCount) {
+            throwInvalidEquationError(
+                "Open and close parenthesis are not balanced");
             return false;
         }
 
@@ -303,14 +344,41 @@ public class Calculator {
      * in the accumulated variable
      */
     private void computeEquation(String[] equation) {
-        try {
-            // if (valueChecker.isSymbol(equation[2]) && !valueChecker.isGrouper(equation[2])) {
-            //     equation[0] = computer.compute(equation[0], equation[1], equation[2]);
-            // }
+        List<String> processedEquation = new ArrayList<String>();
+        processedEquation.addAll(Arrays.asList(equation));
+        
+        int index;
+        double computedValue;
+        String firstOperand;
+        String secondOperand;
+        String operator;
+        
+
+        while (processedEquation.size() > 1) {
+            index = 0;
+            while (valueChecker.isNumber(processedEquation.get(index))) {
+                index++;
+            }
+            
+            // Assign to rightful variables
+            firstOperand = processedEquation.get(index - 2);
+            secondOperand = processedEquation.get(index -1);
+            operator = processedEquation.get(index);
+            
+            // Compute the first operand, operator, second operand
+            computedValue = computer.compute(firstOperand, operator, secondOperand);
+
+            // Remove the computed numbers and operators (first three strings in the list)
+            for (int i = 0; i < 3; i++) {
+                processedEquation.remove(index - 2);
+            }
+
+            // Place the computed value at the first index of the 3 removed values
+            processedEquation.add(index - 2, String.valueOf(computedValue));
         }
-        catch (ArrayIndexOutOfBoundsException e) {
-            return;
-        }
+
+        // Save final value to accumulated
+        accumulated = Double.parseDouble(processedEquation.get(0));
     }
 
     /**
@@ -331,13 +399,13 @@ public class Calculator {
      */
 	private void outputAccumulated() {
 		if (Double.isNaN(accumulated) || Double.isInfinite(accumulated)) {
-            System.out.print("= undefined");
+            System.out.println("= undefined");
         }
 		else if (accumulated % 1 == 0.0) {
-            System.out.printf("= %.0f", accumulated);
+            System.out.printf("= %.0f\n", accumulated);
         }
 		else if (accumulated % 1 != 0.0) {
-            System.out.print("= " + accumulated);
+            System.out.println("= " + accumulated);
         }
         accumulatedInputs.clear();
 	}
