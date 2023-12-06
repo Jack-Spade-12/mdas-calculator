@@ -2,6 +2,8 @@
  * History
  * 		
  * 		December 2, 2023 - S. Cortel - Modified
+ *      December 7, 2023 - S. Cortel - Made sure non-symbols and non-numbers were
+ *                                     not allowed to be added to any stack
  * 
  * Purpose
  * 		
@@ -73,7 +75,7 @@ public class InfixToPostfixConversion {
      * Push the sign into the sign stack
      */
 	private void push(String symbol) {
-		if (getPrecedence(peek()) > getPrecedence(symbol)) {
+        if (getPrecedence(peek()) > getPrecedence(symbol)) {
             pop();
             push(symbol);
         }
@@ -101,8 +103,8 @@ public class InfixToPostfixConversion {
 			if (valueChecker.isSymbol(equationSegment)) {
                 push(equationSegment);
             }
-            // Push non-symbols to equation stack
-            else {
+            // Push numbers to equation stack
+            else if (valueChecker.isNumber(equationSegment)) {
                 tempEquation.add(equationSegment);
             }
 		}
