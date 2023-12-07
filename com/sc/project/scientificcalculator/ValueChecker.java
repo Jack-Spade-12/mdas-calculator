@@ -3,6 +3,7 @@
  * 		
  * 		December 2, 2023 - S. Cortel - Created
  *      December 7, 2023 - S. Cortel - Added isOperator() method
+ *      December 8, 2023 - S. Cortel - Changed access to ValueChecker methods to static
  * 
  * Purpose
  * 		
@@ -16,14 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ValueChecker {
-    private List<Character> specialCharacters = Arrays.asList('A', 'a');
-    private List<Character> numberSeparators = Arrays.asList(',', '.');
-    private List<Character> symbols = Arrays.asList('(', ')', '/', '*', '^', '+', '-', '%', 'r', 'R');
-    private List<Character> groupers = Arrays.asList('(', ')');
-    private List<Character> rootOperators = Arrays.asList( 'R', 'r');
-    private List<Character> operators = Arrays.asList('/', '*', '^', '+', '-', '%', 'r', 'R');
-    private char minus = '-';
-    private char equals = '=';
+    private static List<Character> specialCharacters = Arrays.asList('A', 'a');
+    private static List<Character> numberSeparators = Arrays.asList(',', '.');
+    private static List<Character> symbols = Arrays.asList('(', ')', '/', '*', '^', '+', '-', '%', 'r', 'R');
+    private static List<Character> groupers = Arrays.asList('(', ')');
+    private static List<Character> rootOperators = Arrays.asList( 'R', 'r');
+    private static List<Character> operators = Arrays.asList('/', '*', '^', '+', '-', '%', 'r', 'R');
+    private static char minus = '-';
+    private static char equals = '=';
     
     /**
 	 * Checks if a character is a special value 'A' or 'a'
@@ -31,7 +32,7 @@ public class ValueChecker {
 	 * @param value to check in form of <code>char</code>
 	 * @return <code>boolean</code>
 	 */
-	public boolean isSpecial(char value) {
+	public static boolean isSpecial(char value) {
 		return specialCharacters.contains(value);
 	}
 
@@ -41,7 +42,7 @@ public class ValueChecker {
 	 * @param value to check in form of <code>String</code>
 	 * @return <code>boolean</code>
 	 */
-    public boolean isSpecial(String value) {
+    public static boolean isSpecial(String value) {
         return value.length() == 1 && isSpecial(value.charAt(0));
     }
 	
@@ -52,7 +53,7 @@ public class ValueChecker {
 	 * @param value to check in form of <code>char</code>
 	 * @return <code>boolean</code>
 	 */
-	public boolean isDigit(char value) {
+	public static boolean isDigit(char value) {
 		return Character.isDigit(value) || numberSeparators.contains(value);
 	}
 
@@ -63,7 +64,7 @@ public class ValueChecker {
 	 * @param value to check in form of <code>char</code>
 	 * @return <code>boolean</code>
 	 */
-	public boolean isDigit(String value) {
+	public static boolean isDigit(String value) {
 		return value.length() == 1 && isDigit(value.charAt(0));
 	}
 	
@@ -73,7 +74,7 @@ public class ValueChecker {
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
-    public boolean isSymbol(char value) {
+    public static boolean isSymbol(char value) {
         return symbols.contains(value);
     }
 
@@ -83,7 +84,7 @@ public class ValueChecker {
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
-    public boolean isSymbol(String value) {
+    public static boolean isSymbol(String value) {
         return value.length() == 1 && isSymbol(value.charAt(0));
     }
 
@@ -93,7 +94,7 @@ public class ValueChecker {
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
-    public boolean isOpertor(char value) {
+    public static boolean isOpertor(char value) {
         return operators.contains(value);
     }
 
@@ -103,7 +104,7 @@ public class ValueChecker {
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
-    public boolean isOpertor(String value) {
+    public static boolean isOpertor(String value) {
         return value.length() == 1 && isOpertor(value.charAt(0));
     }
 
@@ -114,7 +115,7 @@ public class ValueChecker {
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
-    public boolean isRootOperator(char value) {
+    public static boolean isRootOperator(char value) {
         return rootOperators.contains(value);
     }
 
@@ -125,7 +126,7 @@ public class ValueChecker {
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
-    public boolean isRootOperator(String value) {
+    public static boolean isRootOperator(String value) {
         return isRootOperator(value.charAt(0));
     }
 
@@ -135,7 +136,7 @@ public class ValueChecker {
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
-    public boolean isMinus(char value) {
+    public static boolean isMinus(char value) {
         return value == minus;
     }
 
@@ -145,7 +146,7 @@ public class ValueChecker {
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
-    public boolean isMinus(String value) {
+    public static boolean isMinus(String value) {
         return value.length() == 1 && isMinus(value.charAt(0));
     }
 
@@ -156,7 +157,7 @@ public class ValueChecker {
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
-    public boolean isGrouper(char value) {
+    public static boolean isGrouper(char value) {
         return groupers.contains(value);
     }
 
@@ -167,7 +168,7 @@ public class ValueChecker {
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
-    public boolean isGrouper(String value) {
+    public static boolean isGrouper(String value) {
         return value.length() == 1 && isGrouper(value.charAt(0));
     }
 
@@ -177,7 +178,7 @@ public class ValueChecker {
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
-    public boolean isEquals(char value) {
+    public static boolean isEquals(char value) {
         return value == equals;
     }
 
@@ -187,7 +188,7 @@ public class ValueChecker {
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
-    public boolean isEquals(String value) {
+    public static boolean isEquals(String value) {
         return value.length() == 1 && isEquals(value.charAt(0));
     }
 
@@ -196,7 +197,7 @@ public class ValueChecker {
      * 
      * @return <code>String</code>
      */
-    public String getEquals() {
+    public static String getEquals() {
         return String.valueOf(equals);
     }
 
@@ -206,7 +207,7 @@ public class ValueChecker {
 	 * @param value to check in form of <code>String</code>
 	 * @return <code>boolean</code>
 	 */
-	public boolean isNumber(String value) {
+	public static boolean isNumber(String value) {
         try {
             // Remove commas ( , )
             Double.parseDouble(value.replace(",", ""));
