@@ -10,8 +10,8 @@
  *      
  */
 package com.sc.project.scientificcalculator.tester;
+import com.sc.project.assertunit.AssertUnit;
 import com.sc.project.scientificcalculator.ValueChecker;
-import com.sc.project.scientificcalculator.tester.common.AssertUnit;
 
 public class ValueCheckerTest {
 

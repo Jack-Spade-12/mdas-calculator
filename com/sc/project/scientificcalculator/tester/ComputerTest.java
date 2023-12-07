@@ -9,8 +9,8 @@
  * 
  */
 package com.sc.project.scientificcalculator.tester;
+import com.sc.project.assertunit.AssertUnit;
 import com.sc.project.scientificcalculator.Computer;
-import com.sc.project.scientificcalculator.tester.common.AssertUnit;
 
 public class ComputerTest {
     

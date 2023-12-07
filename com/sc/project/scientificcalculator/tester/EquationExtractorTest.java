@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sc.project.assertunit.AssertUnit;
 import com.sc.project.scientificcalculator.EquationExtractor;
-import com.sc.project.scientificcalculator.tester.common.AssertUnit;
 
 public class EquationExtractorTest {
     

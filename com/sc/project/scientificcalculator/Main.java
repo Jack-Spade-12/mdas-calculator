@@ -12,7 +12,7 @@
 package com.sc.project.scientificcalculator;
 import java.util.Scanner;
 
-import com.sc.project.scientificcalculator.tester.common.MainTest;
+import com.sc.project.scientificcalculator.tester.MainTest;
 
 public class Main {
     public static void main(String[] args) {
