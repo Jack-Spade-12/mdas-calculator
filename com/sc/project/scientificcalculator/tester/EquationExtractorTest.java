@@ -89,7 +89,7 @@ public class EquationExtractorTest {
         input = "1+1=";
         expectedResult.addAll(Arrays.asList("1", "+", "1", "="));
         actualResult.addAll(EquationExtractor.convertToProperEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8cls");
+        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8");
         expectedResult.clear();
         actualResult.clear();
     }

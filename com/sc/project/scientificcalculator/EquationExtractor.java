@@ -74,11 +74,15 @@ public class EquationExtractor {
 				pushToList(equationList, temporary, equationChar);
 			}
 			
-			// If number, special, or is equal sign simply add to temporary
-			else if (ValueChecker.isDigit(equationChar) 
-				|| ValueChecker.isSpecial(equationChar)
-				|| ValueChecker.isEquals(equationChar)) {
+			// If number simply add to temporary
+			else if (ValueChecker.isDigit(equationChar)) {
 				temporary.append(String.valueOf(equationChar));
+			}
+
+			// If special or is equal sign simply add to temporary
+			else if (ValueChecker.isSpecial(equationChar)
+				|| ValueChecker.isEquals(equationChar)) {
+				pushToList(equationList, temporary, equationChar);
 			}
 			
 			// Check if a value is a symbol
