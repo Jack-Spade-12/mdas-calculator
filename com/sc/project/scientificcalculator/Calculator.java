@@ -5,6 +5,7 @@
  *      December 5, 2023 - S. Cortel - Modified
  *      December 6, 2023 - S. Cortel - Modified
  *      December 7, 2023 - S. Cortel - Modified
+ *      December 8, 2023 - S. Cortel - Removed old code; organized methods
  * 
  * Purpose
  * 		
@@ -47,51 +48,6 @@ public class Calculator {
 
         executeExit();
 	}
-
-    /**
-     * Prints the header of the calculator
-     */
-    private void printHeader() {
-        ProcessBuilder cls = new ProcessBuilder("cmd", "/c", "cls");
-		try {
-			cls.inheritIO().start().waitFor();
-		}
-		catch (Exception e) {}
-
-		System.out.println("\n|===============================|");
-		System.out.println("|                               |");
-		System.out.println("| >>  SCIENTIFIC CALCULATOR  << |");
-		System.out.println("|         Seth Cortel           |");
-		System.out.println("|                               |");
-		System.out.println("|===============================|");
-    }
-
-    /**
-     * Print help
-     */
-    private void printHelp() {
-        // Best to use TextBlocks but it needs JDK 15
-        System.out.print("To refer to your previous                     \n"
-						+ "output, input: 'A' / 'a'                     \n\n"
-
-						+ "To perform root operations,                  \n"
-						+ "input: r(BASE, EXPONENT)                     \n\n"
-
-						// + "To perform nested root operations,           \n"
-						// + "use a single-line input calculation.         \n\n"
-
-						+ "This calculator accepts single               \n"
-						+ "line input and multiple                      \n"
-						+ "continuous inputs.                           \n\n"
-
-                        + "Please be informed that characters           \n"
-                        + "and symbols that are not supported in        \n"
-                        + "this calculator are discarded in the         \n"
-                        + "process.                                     \n\n"
-
-						+ "To terminate the program,                    \n"
-						+ "input 'XX // xx'.                            \n");
-    }
 
     /**
      * Processes the user input; cleaning, segmenting, and
@@ -172,71 +128,6 @@ public class Calculator {
             }
         }
         return -1;
-    }
-
-    /**
-     * Shows an error message in the calculator and clears accumulated input
-     * 
-     * @param errorMessage to show in the calculator in form of <code>String</code>
-     */
-    private void throwInvalidEquationError(String errorMessage) {
-        System.out.println("Invalid Formula: " + errorMessage);
-        printAccumulated();
-        accumulatedInputs.clear();
-        System.out.println("Calculator has been cleared");
-    }
-
-    /**
-     * Shows an error message in the calculator and clears latest input
-     * 
-     * @param errorMessage to show in the calculator in form of <code>String</code>
-     * @param inputValues recently added
-     */
-    private void throwInvalidInputError(String errorMessage, String[] inputValues) {
-        System.out.println("Invalid Input: " + errorMessage);
-        printAccumulated(false);
-        printCurrentInput(inputValues);
-        System.out.println("Input values has been cleared");
-    }
-
-    /**
-     * Prints out the accumulated equation separated by ' '
-     * character
-     */
-    private void printAccumulated(boolean hasNewLine) {
-        StringBuilder inputs = new StringBuilder();
-        for (String accumulatedInput : accumulatedInputs) {
-            inputs.append(accumulatedInput);
-            inputs.append(" ");
-        }
-        System.out.print(inputs.toString());
-        if (hasNewLine) {
-            System.out.println();
-        }
-    }
-
-    /**
-     * Prints out the accumulated equation separated by ' '
-     * character followed by a '\n' character
-     */
-    private void printAccumulated() {
-        printAccumulated(true);
-    }
-
-    /**
-     * Prints out the accumulated inputs separated by ' '
-     * character
-     */
-    private void printCurrentInput(String[] values) {
-        StringBuilder inputs = new StringBuilder();
-        try {
-            for (String value : values) {
-                inputs.append(value);
-                inputs.append(" ");
-            }
-            System.out.println(inputs.toString());
-        }
-        catch (NullPointerException npe) {}
     }
 
     /**
@@ -392,6 +283,51 @@ public class Calculator {
 	}
 
     /**
+     * Prints the header of the calculator
+     */
+    private void printHeader() {
+        ProcessBuilder cls = new ProcessBuilder("cmd", "/c", "cls");
+		try {
+			cls.inheritIO().start().waitFor();
+		}
+		catch (Exception e) {}
+
+		System.out.println("\n|===============================|");
+		System.out.println("|                               |");
+		System.out.println("| >>  SCIENTIFIC CALCULATOR  << |");
+		System.out.println("|         Seth Cortel           |");
+		System.out.println("|                               |");
+		System.out.println("|===============================|");
+    }
+
+    /**
+     * Print help
+     */
+    private void printHelp() {
+        // Best to use TextBlocks but it needs JDK 15
+        System.out.print("To refer to your previous                     \n"
+						+ "output, input: 'A' / 'a'                     \n\n"
+
+						+ "To perform root operations,                  \n"
+						+ "input: r(BASE, EXPONENT)                     \n\n"
+
+						// + "To perform nested root operations,           \n"
+						// + "use a single-line input calculation.         \n\n"
+
+						+ "This calculator accepts single               \n"
+						+ "line input and multiple                      \n"
+						+ "continuous inputs.                           \n\n"
+
+                        + "Please be informed that characters           \n"
+                        + "and symbols that are not supported in        \n"
+                        + "this calculator are discarded in the         \n"
+                        + "process.                                     \n\n"
+
+						+ "To terminate the program,                    \n"
+						+ "input 'XX // xx'.                            \n");
+    }
+
+    /**
      * The accumulated is a double and this method
      * removes the '.0' when the accumulated has no
      * floating value. Returns undefined when the
@@ -411,6 +347,71 @@ public class Calculator {
 	}
 
     /**
+     * Prints out the accumulated equation separated by ' '
+     * character
+     */
+    private void printAccumulated(boolean hasNewLine) {
+        StringBuilder inputs = new StringBuilder();
+        for (String accumulatedInput : accumulatedInputs) {
+            inputs.append(accumulatedInput);
+            inputs.append(" ");
+        }
+        System.out.print(inputs.toString());
+        if (hasNewLine) {
+            System.out.println();
+        }
+    }
+
+    /**
+     * Prints out the accumulated equation separated by ' '
+     * character followed by a '\n' character
+     */
+    private void printAccumulated() {
+        printAccumulated(true);
+    }
+
+    /**
+     * Prints out the accumulated inputs separated by ' '
+     * character
+     */
+    private void printCurrentInput(String[] values) {
+        StringBuilder inputs = new StringBuilder();
+        try {
+            for (String value : values) {
+                inputs.append(value);
+                inputs.append(" ");
+            }
+            System.out.println(inputs.toString());
+        }
+        catch (NullPointerException npe) {}
+    }
+
+    /**
+     * Shows an error message in the calculator and clears accumulated input
+     * 
+     * @param errorMessage to show in the calculator in form of <code>String</code>
+     */
+    private void throwInvalidEquationError(String errorMessage) {
+        System.out.println("Invalid Formula: " + errorMessage);
+        printAccumulated();
+        accumulatedInputs.clear();
+        System.out.println("Calculator has been cleared");
+    }
+
+    /**
+     * Shows an error message in the calculator and clears latest input
+     * 
+     * @param errorMessage to show in the calculator in form of <code>String</code>
+     * @param inputValues recently added
+     */
+    private void throwInvalidInputError(String errorMessage, String[] inputValues) {
+        System.out.println("Invalid Input: " + errorMessage);
+        printAccumulated(false);
+        printCurrentInput(inputValues);
+        System.out.println("Input values has been cleared");
+    }
+
+    /**
      * Closes the scanner and exits the program
      */
     private void executeExit() {
@@ -418,112 +419,4 @@ public class Calculator {
         scanner.close();
         System.exit(0);
     }
-		
-    
-    
-    
-    
-    
-    
-    // private boolean validateEquation(String[] equation) {
-		
-	// 	/*
-	// 	 * This validates if the equation is valid such that the variables
-	// 	 * are 1 more than the signs [excluding: parenthesis, commas, and equals].
-	// 	 *  
-	// 	 */
-		
-	// 	int countVariables = 0;
-	// 	int countSigns = 0;
-		
-	// 	try {
-	// 		for (String i : equation) {
-	// 			if (equate.isSymbol(i) && !equate.isDiscarded(i)) {
-	// 				countSigns++;
-	// 			}
-	// 			else if (equate.isNumber(i) || (equate.isSpecial(i.charAt(0)))) {
-	// 				countVariables++;
-	// 			}
-	// 		}
-	// 	}
-	// 	catch (Exception e) {}
-		
-	// 	if (countSigns == countVariables - 1)
-	// 		return true;
-	// 	return false;
-	// }
-		
-	// private void executeCalculator(String[] strEquation) {
-	// 	String[] equation = fix.convertToPostfix(strEquation);				// Converts the proper equation (infix notation) into postfix notation			
-	// 	accumulated = compute(equation);								// Calculates the final equation and stores it to `Accumulated`
-	// 	outputAccumulated();												// Output the result for the computation
-	// }
-
-	// private void inputAccumulated(String input) {							// Verifies if inputAccum is to be accumulated or to be thrown
-	// 	char inputFirstChar = 0;
-	// 	char accumLastChar = 0;
-
-	// 	try {
-	// 		try {
-	// 			accumLastChar = inputAccum.charAt(inputAccum.length() - 1);
-	// 		}
-	// 		catch (Exception e) {
-	// 			accumLastChar = 0;
-	// 		}
-			
-	// 		for (int i=0; i<input.length(); i++) {
-	// 			if (!Character.isWhitespace(input.charAt(i))) {
-	// 				inputFirstChar = input.charAt(i);
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// 	catch (Exception e) {
-	// 		inputFirstChar = 0;
-	// 	}
-		
-	// 	if (accumLastChar == '=')											// Determines if user input should be concatenated to the input accum or not
-	// 		inputAccum = "";
-	// 	else if ((equate.isDigit(accumLastChar) || equate.isSpecial(accumLastChar) || equate.isDiscarded(accumLastChar)) && (accumLastChar != '(' && accumLastChar != ','))
-	// 		if ((equate.isDigit(inputFirstChar) || equate.isSpecial(inputFirstChar) || equate.isDiscarded(inputFirstChar) || inputFirstChar == 'r' || inputFirstChar == 'R') && inputFirstChar != ')')
-	// 			inputAccum = "";
-		
-	// 	if (equate.isNumber(input) || equate.isSpecial(inputFirstChar)) {
-	// 		if (state == 1) {
-	// 			inputAccum = inputAccum.concat(input + ",");
-	// 			state = 2;
-	// 		}
-			
-	// 		else if (state == 2) {
-	// 			inputAccum = inputAccum.concat(input + ") ");
-	// 			state = 0;
-	// 		}
-			
-	// 		else if (state == 0){
-	// 			inputAccum = inputAccum.concat(input);
-	// 		}		
-	// 	}
-		
-	// 	else {
-	// 		if (input.toUpperCase().equals("R")) {
-	// 			state = 1;
-	// 			inputAccum = inputAccum.concat(" r(");
-	// 		}
-			
-	// 		else {
-	// 			inputAccum = inputAccum.concat(input);
-	// 		}
-	// 	}
-
-		
-	// 	String[] equation = equate.convertToProperEquation(inputAccum);		// Converts inputAccum into an array of operators and operands
-		
-	// 	System.out.print("= ");												// Shows the equation
-	// 	for (String i : equation)											//
-	// 		System.out.print(i + " ");										//
-	// 	System.out.println();												//
-		
-	// 	if (calculate.validateEquation(equation))
-	// 		calculate.executeCalculator(equation);
-	// }
 } 
