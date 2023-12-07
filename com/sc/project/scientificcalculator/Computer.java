@@ -2,6 +2,9 @@
  * History
  * 		
  * 		December 3, 2023 - S. Cortel - Modified
+ * 		December 8, 2023 - S. Cortel - Moved InfixToPostfixConversion here;
+ * 									   Converted to static access;
+ * 									   Moved here computation of full postfix equation;				   
  * 
  * Purpose
  * 		
@@ -9,6 +12,8 @@
  * 
  */
 package com.sc.project.scientificcalculator;
+
+import java.util.List;
 
 public class Computer {
 
@@ -21,7 +26,7 @@ public class Computer {
      * @param second operand in form of <code>double</code>
      * @return <code>double</code>
      */
-	public double compute(double first, String operator, double second) {
+	public static double compute(double first, String operator, double second) {
 		
 		switch(operator) {
 			case "+":
@@ -53,8 +58,48 @@ public class Computer {
      * @param second operand in form of <code>double</code>
      * @return <code>double</code>
      */
-	public double compute(String first, String operator, String second) {
+	public static double compute(String first, String operator, String second) {
         return compute(Double.parseDouble(first.replaceAll(",", "")), 
             operator, Double.parseDouble(second.replaceAll(",", "")));
     }
+
+	/**
+	 * Fully computes an entire equation
+	 */
+	public static double computeEquation(List<String> equation) {
+		ValueChecker valueChecker = new ValueChecker();
+		InfixToPostfixConversion infixToPostfixConversion = new InfixToPostfixConversion();
+		List<String> postfixEquation = infixToPostfixConversion.convertToPostfix(equation);
+		
+		int index;
+        double computedValue;
+        String firstOperand;
+        String secondOperand;
+        String operator;
+        
+		while (postfixEquation.size() > 1) {
+            index = 0;
+            while (valueChecker.isNumber(postfixEquation.get(index))) {
+                index++;
+            }
+            
+            // Assign to rightful variables
+            firstOperand = postfixEquation.get(index - 2);
+            secondOperand = postfixEquation.get(index -1);
+            operator = postfixEquation.get(index);
+            
+            // Compute the first operand, operator, second operand
+            computedValue = compute(firstOperand, operator, secondOperand);
+
+            // Remove the computed numbers and operators (first three strings in the list)
+            for (int i = 0; i < 3; i++) {
+                postfixEquation.remove(index - 2);
+            }
+
+            // Place the computed value at the first index of the 3 removed values
+            postfixEquation.add(index - 2, String.valueOf(computedValue));
+        }
+
+        return Double.parseDouble(postfixEquation.get(0));
+	}
 }

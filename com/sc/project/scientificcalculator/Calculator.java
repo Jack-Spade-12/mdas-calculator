@@ -85,9 +85,6 @@ public class Calculator {
                 System.out.print("> ");
                 printCurrentInput(fullEquation);
 
-                // Convert equation to postfix notation
-                fullEquation = infixToPostfixConversion.convertToPostfix(fullEquation);
-
                 // Compute the equation
                 computeEquation(fullEquation);
                 
@@ -238,38 +235,7 @@ public class Calculator {
         List<String> processedEquation = new ArrayList<String>();
         processedEquation.addAll(Arrays.asList(equation));
         
-        int index;
-        double computedValue;
-        String firstOperand;
-        String secondOperand;
-        String operator;
         
-
-        while (processedEquation.size() > 1) {
-            index = 0;
-            while (valueChecker.isNumber(processedEquation.get(index))) {
-                index++;
-            }
-            
-            // Assign to rightful variables
-            firstOperand = processedEquation.get(index - 2);
-            secondOperand = processedEquation.get(index -1);
-            operator = processedEquation.get(index);
-            
-            // Compute the first operand, operator, second operand
-            computedValue = computer.compute(firstOperand, operator, secondOperand);
-
-            // Remove the computed numbers and operators (first three strings in the list)
-            for (int i = 0; i < 3; i++) {
-                processedEquation.remove(index - 2);
-            }
-
-            // Place the computed value at the first index of the 3 removed values
-            processedEquation.add(index - 2, String.valueOf(computedValue));
-        }
-
-        // Save final value to accumulated
-        accumulated = Double.parseDouble(processedEquation.get(0));
     }
 
     /**
