@@ -4,7 +4,7 @@
  * 		December 3, 2023 - S. Cortel - Modified
  * 		December 8, 2023 - S. Cortel - Moved InfixToPostfixConversion here;
  * 									   Converted to static access;
- * 									   Moved here computation of full postfix equation;				   
+ * 									   Moved here computation of full postfix equation;
  * 
  * Purpose
  * 		
