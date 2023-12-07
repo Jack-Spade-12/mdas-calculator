@@ -2,8 +2,9 @@
  * History
  * 		
  * 		December 3, 2023 - S. Cortel - Created
- *      December 8, 2023 - S. Cortel - Converted AssertUnit to static access
- *                                     Added computeEquation() test
+ *      December 8, 2023 - S. Cortel - Converted AssertUnit to static access;
+ *                                     Added computeEquation() test;
+ *                                     Converted Computer access to static
  * 
  * Purpose
  * 		
