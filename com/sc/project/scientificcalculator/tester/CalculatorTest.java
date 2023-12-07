@@ -2,6 +2,7 @@
  * History
  * 		
  * 		December 5, 2023 - S. Cortel - Created
+ *      December 8, 2023 - S. Cortel - Converted AssertUnit to static access
  * 
  * Purpose
  * 		
@@ -19,8 +20,10 @@ import com.sc.project.scientificcalculator.Calculator;
 public class CalculatorTest {
     
     private Calculator calculator = new Calculator();
-    private AssertUnit assertUnit = new AssertUnit();
 
+    /**
+     * Tests the entire Calculator class at instantiation
+     */
     public CalculatorTest() {
         System.out.println("\nCalculator Test Start");
         processInput();
@@ -48,19 +51,19 @@ public class CalculatorTest {
         input.addAll(Arrays.asList("1", "+", "1", "="));
         expectedResult = 3;
         actualResult = calculator.getEqualSignPosition(input.toArray(new String[input.size()]));
-        assertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 1");
         input.clear();
 
         input.addAll(Arrays.asList("=", "+", "1"));
         expectedResult = 0;
         actualResult = calculator.getEqualSignPosition(input.toArray(new String[input.size()]));
-        assertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 2");
         input.clear();
 
         input.addAll(Arrays.asList("1", "+", "1", "*", "32"));
         expectedResult = -1;
         actualResult = calculator.getEqualSignPosition(input.toArray(new String[input.size()]));
-        assertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 3");
         input.clear();
     }
 
@@ -79,14 +82,14 @@ public class CalculatorTest {
         inputIndex = 1;
         expectedResult = new String[] {"1", "+", "2"};
         actualResult = calculator.addValueAtIndex(input, inputValue, inputIndex);
-        assertUnit.assertEquals(expectedResult, actualResult, "addValueAtIndex() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "addValueAtIndex() test 1");
 
         input = new String[] {"1", "(", "3", ")"};
         inputValue = "*";
         inputIndex = 1;
         expectedResult = new String[] {"1", "*", "(", "3", ")"};
         actualResult = calculator.addValueAtIndex(input, inputValue, inputIndex);
-        assertUnit.assertEquals(expectedResult, actualResult, "addValueAtIndex() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "addValueAtIndex() test 2");
     }
 
     /**
@@ -100,21 +103,21 @@ public class CalculatorTest {
         input = "1 + 3 + 4 * 4 =";
         expectedResult = true;
         actualResult = calculator.isContinue(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 1");
         
         input = "10 + 1 =";
         expectedResult = true;
         actualResult = calculator.isContinue(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 2");
 
         input = "10 XX";
         expectedResult = false;
         actualResult = calculator.isContinue(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 3");
 
         input = "xx";
         expectedResult = false;
         actualResult = calculator.isContinue(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 4");
     }
 }
