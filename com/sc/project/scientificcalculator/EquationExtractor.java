@@ -2,7 +2,12 @@
  * History
  * 		
  * 		December 2, 2023 - S. Cortel
- * 
+ * 		December 8, 2023 - S. Cortel - Changed return datatype of convertToProperEquation
+ * 									   to List<String>;
+ * 									   Converted access to static;
+ * 									   Converted acces to ValueChecker to static;
+ * 									   Refactored code;
+ * 									   Removed global variables;
  * Purpose
  * 		
  * 		Processes a string into substrings to be
@@ -15,80 +20,26 @@ import java.util.List;
 
 public class EquationExtractor {
 	
-	private ValueChecker value = new ValueChecker();
-	private StringBuilder temporary;
-	private List<String> equationList;
-	
 	/**
-	 * This method converts a whole <code>String</code> 
-	 * of an equation into a <code>String[]</code>
-	 * for processing
+	 * Gets the last pushed String in the equation list
 	 * 
-	 * @param equation in form of <code>String</code>
-	 * @return <code>String[]</code>
+	 * @return String
 	 */
-	public String[] convertToProperEquation(String equation) {
-		
-		temporary = new StringBuilder();
-		equationList = new ArrayList<String>();
-		char[] equationCharArray = equation.toCharArray();
-		
-		// Determines which characters should be grouped together to create a number
-		for (char equationChar : equationCharArray) {
-			
-			// Whitespaces treated as delimiter
-			if (Character.isWhitespace(equationChar)) {
-				pushToList(equationChar);
-			}
-			
-			// If number simply add to temporary
-			else if (value.isDigit(equationChar)) {
-				temporary.append(String.valueOf(equationChar));
-			}
-			
-			// Check if a value is a symbol
-			else if (value.isSymbol(equationChar)) {
-
-				// Validate if minus is to be negative or just minus
-				if (value.isMinus(equationChar)) {
-					// Minus is minus
-					if (value.isNumber(peekList())) {
-						pushToList(equationChar);
-					}
-					// Minus is negative
-					else {
-						temporary.append(String.valueOf(equationChar));
-					}
-				}
-				
-				// Other symbols are automatically added to the list
-				else {
-					pushToList(equationChar);
-				}
-			}
-
-			// Special
-			else if (value.isSpecial(equationChar)) {
-				pushToList(equationChar);
-			}
-			
-			// Equal sign
-			else if (value.isEquals(equationChar)) {
-				pushToList(equationChar);
-			}
+	private static String peekList(List<String> equationList) {
+		try {
+			return equationList.get(equationList.size() - 1);
 		}
-		
-		pushToList(' ');
-
-		return equationList.toArray(new String[equationList.size()]);	
+		catch (ArrayIndexOutOfBoundsException e) {
+			return null;
+		}
 	}
-
+	
 	/**
 	 * Adds the value to the equation list
 	 * 
 	 * @param value to add in form of <code>char</code>
 	 */
-	private void pushToList(char value) {
+	private static void pushToList(List<String> equationList, StringBuilder temporary, char value) {
 		// Add the accumulated number first if there is
 		if (temporary.length() > 0) {
 			equationList.add(temporary.toString());
@@ -102,16 +53,58 @@ public class EquationExtractor {
 	}
 
 	/**
-	 * Gets the last pushed String in the equation list
+	 * This method converts a whole <code>String</code> 
+	 * of an equation into a <code>String[]</code>
+	 * for processing
 	 * 
-	 * @return String
+	 * @param equation in form of <code>String</code>
+	 * @return <code>List<String></code>
 	 */
-	private String peekList() {
-		try {
-			return equationList.get(equationList.size() - 1);
+	public static List<String> convertToProperEquation(String equation) {
+		
+		StringBuilder temporary = new StringBuilder();
+		List<String> equationList = new ArrayList<String>();
+		char[] equationCharArray = equation.toCharArray();
+		
+		// Determines which characters should be grouped together to create a number
+		for (char equationChar : equationCharArray) {
+			
+			// Whitespaces treated as delimiter
+			if (Character.isWhitespace(equationChar)) {
+				pushToList(equationList, temporary, equationChar);
+			}
+			
+			// If number, special, or is equal sign simply add to temporary
+			else if (ValueChecker.isDigit(equationChar) 
+				|| ValueChecker.isSpecial(equationChar)
+				|| ValueChecker.isEquals(equationChar)) {
+				temporary.append(String.valueOf(equationChar));
+			}
+			
+			// Check if a value is a symbol
+			else if (ValueChecker.isSymbol(equationChar)) {
+
+				// Validate if minus is to be negative or just minus
+				if (ValueChecker.isMinus(equationChar)) {
+					// Minus is minus
+					if (ValueChecker.isNumber(peekList(equationList))) {
+						pushToList(equationList, temporary, equationChar);
+					}
+					// Minus is negative
+					else {
+						temporary.append(String.valueOf(equationChar));
+					}
+				}
+				
+				// Other symbols are automatically added to the list
+				else {
+					pushToList(equationList, temporary, equationChar);
+				}
+			}
 		}
-		catch (ArrayIndexOutOfBoundsException e) {
-			return null;
-		}
+		
+		pushToList(equationList, temporary, ' ');
+
+		return equationList;	
 	}
 }
