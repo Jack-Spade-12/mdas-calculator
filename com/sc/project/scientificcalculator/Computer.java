@@ -5,6 +5,8 @@
  * 		December 8, 2023 - S. Cortel - Moved InfixToPostfixConversion here;
  * 									   Converted to static access;
  * 									   Moved here computation of full postfix equation;
+ *                                     Changed ValueChecker access to static;
+ *                                     Changed InfixToPostfixConversion access to static;
  * 
  * Purpose
  * 		
@@ -12,7 +14,6 @@
  * 
  */
 package com.sc.project.scientificcalculator;
-
 import java.util.List;
 
 public class Computer {
@@ -67,9 +68,7 @@ public class Computer {
 	 * Fully computes an entire equation
 	 */
 	public static double computeEquation(List<String> equation) {
-		ValueChecker valueChecker = new ValueChecker();
-		InfixToPostfixConversion infixToPostfixConversion = new InfixToPostfixConversion();
-		List<String> postfixEquation = infixToPostfixConversion.convertToPostfix(equation);
+		List<String> postfixEquation = InfixToPostfixConversion.convertToPostfix(equation);
 		
 		int index;
         double computedValue;
@@ -79,7 +78,7 @@ public class Computer {
         
 		while (postfixEquation.size() > 1) {
             index = 0;
-            while (valueChecker.isNumber(postfixEquation.get(index))) {
+            while (ValueChecker.isNumber(postfixEquation.get(index))) {
                 index++;
             }
             
