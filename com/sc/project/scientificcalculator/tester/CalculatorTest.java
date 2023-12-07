@@ -2,7 +2,10 @@
  * History
  * 		
  * 		December 5, 2023 - S. Cortel - Created
- *      December 8, 2023 - S. Cortel - Converted AssertUnit to static access
+ *      December 8, 2023 - S. Cortel - Converted AssertUnit to static access;
+ *                                     Changed method access to static access;
+ *                                     Removed addValueAtIndex() and isContinue() 
+ *                                     methods;
  * 
  * Purpose
  * 		
@@ -19,8 +22,6 @@ import com.sc.project.scientificcalculator.Calculator;
 
 public class CalculatorTest {
     
-    private Calculator calculator = new Calculator();
-
     /**
      * Tests the entire Calculator class at instantiation
      */
@@ -28,8 +29,6 @@ public class CalculatorTest {
         System.out.println("\nCalculator Test Start");
         processInput();
         getEqualSignPosition();
-        addValueAtIndex();
-        isContinue();
         System.out.println("\nCalculator Test End");
     }
 
@@ -50,74 +49,20 @@ public class CalculatorTest {
 
         input.addAll(Arrays.asList("1", "+", "1", "="));
         expectedResult = 3;
-        actualResult = calculator.getEqualSignPosition(input.toArray(new String[input.size()]));
+        actualResult = Calculator.getEqualSignPosition(input);
         AssertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 1");
         input.clear();
 
         input.addAll(Arrays.asList("=", "+", "1"));
         expectedResult = 0;
-        actualResult = calculator.getEqualSignPosition(input.toArray(new String[input.size()]));
+        actualResult = Calculator.getEqualSignPosition(input);
         AssertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 2");
         input.clear();
 
         input.addAll(Arrays.asList("1", "+", "1", "*", "32"));
         expectedResult = -1;
-        actualResult = calculator.getEqualSignPosition(input.toArray(new String[input.size()]));
+        actualResult = Calculator.getEqualSignPosition(input);
         AssertUnit.assertEquals(expectedResult, actualResult, "getEqualsSignPosition() test 3");
         input.clear();
-    }
-
-    /**
-     * Test addValueAtIndex() method
-     */
-    private void addValueAtIndex() {
-        String[] input;
-        String inputValue;
-        int inputIndex;
-        String[] expectedResult;
-        String[] actualResult;
-
-        input = new String[] {"1", "2"};
-        inputValue = "+";
-        inputIndex = 1;
-        expectedResult = new String[] {"1", "+", "2"};
-        actualResult = calculator.addValueAtIndex(input, inputValue, inputIndex);
-        AssertUnit.assertEquals(expectedResult, actualResult, "addValueAtIndex() test 1");
-
-        input = new String[] {"1", "(", "3", ")"};
-        inputValue = "*";
-        inputIndex = 1;
-        expectedResult = new String[] {"1", "*", "(", "3", ")"};
-        actualResult = calculator.addValueAtIndex(input, inputValue, inputIndex);
-        AssertUnit.assertEquals(expectedResult, actualResult, "addValueAtIndex() test 2");
-    }
-
-    /**
-     * Test isContinue() method
-     */
-    private void isContinue() {
-        String input;
-        boolean expectedResult;
-        boolean actualResult;
-
-        input = "1 + 3 + 4 * 4 =";
-        expectedResult = true;
-        actualResult = calculator.isContinue(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 1");
-        
-        input = "10 + 1 =";
-        expectedResult = true;
-        actualResult = calculator.isContinue(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 2");
-
-        input = "10 XX";
-        expectedResult = false;
-        actualResult = calculator.isContinue(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 3");
-
-        input = "xx";
-        expectedResult = false;
-        actualResult = calculator.isContinue(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isContinue() test 4");
     }
 }
