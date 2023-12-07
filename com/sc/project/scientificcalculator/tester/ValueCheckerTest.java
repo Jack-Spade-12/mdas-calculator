@@ -16,8 +16,7 @@ import com.sc.project.scientificcalculator.ValueChecker;
 public class ValueCheckerTest {
 
     private ValueChecker valueChecker = new ValueChecker();
-    private AssertUnit assertUnit = new AssertUnit();
-
+    
     /**
      * Tests the entire ValueChecker class at instantiation
      */
@@ -47,22 +46,22 @@ public class ValueCheckerTest {
         inputChar = 'a';
         expectedResult = true;
         actualResult = valueChecker.isSpecial(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 1");
 
         inputChar = 'B';
         expectedResult = false;
         actualResult = valueChecker.isSpecial(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 2");
 
         inputString = "a";
         expectedResult = true;
         actualResult = valueChecker.isSpecial(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 3");
 
         inputString = "b";
         expectedResult = false;
         actualResult = valueChecker.isSpecial(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSpecial() test 4");
     }
 
     /**
@@ -77,52 +76,52 @@ public class ValueCheckerTest {
         inputChar = '0';
         expectedResult = true;
         actualResult = valueChecker.isDigit(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 1");
 
         inputChar = '.';
         expectedResult = true;
         actualResult = valueChecker.isDigit(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 2");
 
         inputChar = ',';
         expectedResult = true;
         actualResult = valueChecker.isDigit(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 3");
 
         inputChar = 'a';
         expectedResult = false;
         actualResult = valueChecker.isDigit(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 4");
 
         inputChar = 'A';
         expectedResult = false;
         actualResult = valueChecker.isDigit(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 5");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 5");
 
         inputString = "0";
         expectedResult = true;
         actualResult = valueChecker.isDigit(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 6");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 6");
 
         inputString = ".";
         expectedResult = true;
         actualResult = valueChecker.isDigit(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 7");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 7");
 
         inputString = ",";
         expectedResult = true;
         actualResult = valueChecker.isDigit(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 8");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 8");
 
         inputString = "a";
         expectedResult = false;
         actualResult = valueChecker.isDigit(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 9");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 9");
 
         inputString = "A";
         expectedResult = false;
         actualResult = valueChecker.isDigit(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 10");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isDigit() test 10");
     }
 
     /**
@@ -137,42 +136,42 @@ public class ValueCheckerTest {
         inputChar = '-';
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 1");
 
         inputChar = '0';
         expectedResult = false;
         actualResult = valueChecker.isSymbol(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 2");
 
         inputChar = '*';
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 3");
 
         inputChar = 'r';
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 4");
 
         inputString = "-";
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 5");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 5");
 
         inputString = "0";
         expectedResult = false;
         actualResult = valueChecker.isSymbol(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 6");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 6");
 
         inputString = "*";
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 7");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 7");
 
         inputString = "r";
         expectedResult = true;
         actualResult = valueChecker.isSymbol(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 8");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isSymbol() test 8");
     }
 
     /**
@@ -187,37 +186,37 @@ public class ValueCheckerTest {
         input = 'r';
         expectedResult = true;
         actualResult = valueChecker.isOpertor(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 1");
 
         input = '/';
         expectedResult = true;
         actualResult = valueChecker.isOpertor(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 2");
 
         input = '(';
         expectedResult = false;
         actualResult = valueChecker.isOpertor(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 3");
 
         inputString = "r";
         expectedResult = true;
         actualResult = valueChecker.isOpertor(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 4");
 
         inputString = "/";
         expectedResult = true;
         actualResult = valueChecker.isOpertor(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 5");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 5");
 
         inputString = "(";
         expectedResult = false;
         actualResult = valueChecker.isOpertor(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 6");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 6");
 
         inputString = "1 + 1";
         expectedResult = false;
         actualResult = valueChecker.isOpertor(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 7");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 7");
     }
 
     /**
@@ -231,22 +230,22 @@ public class ValueCheckerTest {
         input = 'r';
         expectedResult = true;
         actualResult = valueChecker.isRootOperator(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 1");
 
         input = 'R';
         expectedResult = true;
         actualResult = valueChecker.isRootOperator(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 2");
 
         input = 's';
         expectedResult = false;
         actualResult = valueChecker.isRootOperator(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 3");
 
         input = 'S';
         expectedResult = false;
         actualResult = valueChecker.isRootOperator(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isRootOperator() test 4");
     }
 
     /**
@@ -261,22 +260,22 @@ public class ValueCheckerTest {
         inputChar = '-';
         expectedResult = true;
         actualResult = valueChecker.isMinus(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 1");
 
         inputChar = '.';
         expectedResult = false;
         actualResult = valueChecker.isMinus(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 2");
 
         inputString = "-";
         expectedResult = true;
         actualResult = valueChecker.isMinus(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 3");
 
         inputString = ".";
         expectedResult = false;
         actualResult = valueChecker.isMinus(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 4");
     }
     
     /**
@@ -291,32 +290,32 @@ public class ValueCheckerTest {
         inputChar = ')';
         expectedResult = true;
         actualResult = valueChecker.isGrouper(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 1");
 
         inputChar = '(';
         expectedResult = true;
         actualResult = valueChecker.isGrouper(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 2");
 
         inputChar = '/';
         expectedResult = false;
         actualResult = valueChecker.isGrouper(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 3");
 
         inputString = ")";
         expectedResult = true;
         actualResult = valueChecker.isGrouper(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 4");
 
         inputString = "(";
         expectedResult = true;
         actualResult = valueChecker.isGrouper(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 5");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 5");
 
         inputString = "/";
         expectedResult = false;
         actualResult = valueChecker.isGrouper(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 6");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 6");
     }
 
     /**
@@ -331,22 +330,22 @@ public class ValueCheckerTest {
         inputChar = '=';
         expectedResult = true;
         actualResult = valueChecker.isEquals(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 1");
 
         inputChar = '.';
         expectedResult = false;
         actualResult = valueChecker.isEquals(inputChar);
-        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 2");
 
         inputString = "=";
         expectedResult = true;
         actualResult = valueChecker.isEquals(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 3");
 
         inputString = ".";
         expectedResult = false;
         actualResult = valueChecker.isEquals(inputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 4");
     }
 
     /**
@@ -360,26 +359,26 @@ public class ValueCheckerTest {
         input = "(0.0)";
         expectedResult = false;
         actualResult = valueChecker.isNumber(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 1");
 
         input = "1000";
         expectedResult = true;
         actualResult = valueChecker.isNumber(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 2");
 
         input = "1,000.01";
         expectedResult = true;
         actualResult = valueChecker.isNumber(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 3");
 
         input = "-1,000.14";
         expectedResult = true;
         actualResult = valueChecker.isNumber(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 4");
 
         input = "10.3 * 130";
         expectedResult = false;
         actualResult = valueChecker.isNumber(input);
-        assertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "isNumber() test 4");
     }
 }

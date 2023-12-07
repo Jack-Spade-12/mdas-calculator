@@ -2,6 +2,7 @@
  * History
  * 		
  * 		December 3, 2023 - S. Cortel - Created
+ *      December 8, 2023 - S. Cortel - Converted AssertUnit to static access
  * 
  * Purpose
  * 		
@@ -15,14 +16,19 @@ import com.sc.project.scientificcalculator.Computer;
 public class ComputerTest {
     
     private Computer computer = new Computer();
-    private AssertUnit assertUnit = new AssertUnit();
-
+    
+    /**
+     * Tests the entire Computer class at instantiation
+     */
     public ComputerTest() {
         System.out.println("\nComputer Test Start");
         compute();
         System.out.println("\nComputer Checker Test End");
     }
 
+    /**
+     * Tests compute() method
+     */
     private void compute() {
         double firstInputDouble;
         double secondInputDouble;
@@ -37,42 +43,42 @@ public class ComputerTest {
         operator = "*";
         expectedResult = 50;
         actualResult = computer.compute(firstInputDouble, operator, secondInputDouble);
-        assertUnit.assertEquals(expectedResult, actualResult, "compute() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "compute() test 1");
 
         firstInputString = "5.0";
         secondInputString = "10";
         operator = "*";
         expectedResult = 50;
         actualResult = computer.compute(firstInputString, operator, secondInputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "compute() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "compute() test 2");
 
         firstInputDouble = 50000;
         secondInputDouble = 10;
         operator = "/";
         expectedResult = 5000;
         actualResult = computer.compute(firstInputDouble, operator, secondInputDouble);
-        assertUnit.assertEquals(expectedResult, actualResult, "compute() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "compute() test 3");
 
         firstInputString = "50,000";
         secondInputString = "10";
         operator = "/";
         expectedResult = 5000;
         actualResult = computer.compute(firstInputString, operator, secondInputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "compute() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "compute() test 4");
 
         firstInputDouble = 10;
         secondInputDouble = 2;
         operator = "r";
         expectedResult = 3.1622776601683795;
         actualResult = computer.compute(firstInputDouble, operator, secondInputDouble);
-        assertUnit.assertEquals(expectedResult, actualResult, "compute() test 5");
+        AssertUnit.assertEquals(expectedResult, actualResult, "compute() test 5");
 
         firstInputString = "10,.0";
         secondInputString = "2";
         operator = "R";
         expectedResult = 3.1622776601683795;
         actualResult = computer.compute(firstInputString, operator, secondInputString);
-        assertUnit.assertEquals(expectedResult, actualResult, "compute() test 6");
+        AssertUnit.assertEquals(expectedResult, actualResult, "compute() test 6");
     }
 
 }

@@ -3,6 +3,7 @@
  * 		
  * 		December 3, 2023 - S. Cortel - Created
  *      December 7, 2023 - S. Cortel - Converted String[] to List<String>
+ *      December 8, 2023 - S. Cortel - Converted AssertUnit to static access
  * 
  * Purpose
  * 		
@@ -19,9 +20,11 @@ import com.sc.project.scientificcalculator.InfixToPostfixConversion;
 
 public class InfixToPostfixConversionTest {
     
-    private AssertUnit assertUnit = new AssertUnit();
     private InfixToPostfixConversion infixToPostfixConversion = new InfixToPostfixConversion();
     
+    /**
+     * Tests the entire InfixToPostfixConversion class at instantiation
+     */
     public InfixToPostfixConversionTest() {
         System.out.println("\nInfix To Postfix Conversion Test Start");
         convertToPostfix();
@@ -39,7 +42,7 @@ public class InfixToPostfixConversionTest {
         input.addAll(Arrays.asList("1", "+", "1"));
         expectedResult.addAll(Arrays.asList("1", "1", "+"));
         actualResult.addAll(infixToPostfixConversion.convertToPostfix(input));
-        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 1");
+        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 1");
         input.clear();
         expectedResult.clear();
         actualResult.clear();
@@ -47,7 +50,7 @@ public class InfixToPostfixConversionTest {
         input.addAll(Arrays.asList("2", "*", "5", "+", "(", "10", "-", "2", ")"));
         expectedResult.addAll(Arrays.asList("2", "5", "*", "10", "2", "-", "+"));
         actualResult.addAll(infixToPostfixConversion.convertToPostfix(input));
-        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 2");
+        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 2");
         input.clear();
         expectedResult.clear();
         actualResult.clear();
@@ -55,7 +58,7 @@ public class InfixToPostfixConversionTest {
         input.addAll(Arrays.asList("r", "(", "16,", "R", "(", "4,", "2", ")", ")", "*", "4", "-", "2"));
         expectedResult.addAll(Arrays.asList("16,", "4,", "2", "R", "r", "4", "*", "2", "-"));
         actualResult.addAll(infixToPostfixConversion.convertToPostfix(input));
-        assertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 2");
+        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToPostfix() test 2");
         input.clear();
         expectedResult.clear();
         actualResult.clear();
