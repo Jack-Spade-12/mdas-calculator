@@ -6,7 +6,8 @@
  *                                     not allowed to be added to any stack
  *      December 7, 2023 - S. Cortel - Removed the dependence to String[] and
  *                                     converted to List<String>, also utilized
- *                                     Stack<String> for the signs     
+ *                                     Stack<String> for the signs;
+ *                                     Changed method access modifiers to static;
  * 
  * Purpose
  * 		
@@ -22,18 +23,8 @@ import java.util.Stack;
 
 public class InfixToPostfixConversion {
 
-    private ValueChecker valueChecker = new ValueChecker();
-	private List<String> tempEquation;
-	private Stack<String> signs;
-	
-    /**
-     * Constructor of the class
-     */
-    public InfixToPostfixConversion() {
-        valueChecker = new ValueChecker();
-        tempEquation = new ArrayList<String>();
-        signs = new Stack<String>();
-    }
+    private static List<String> tempEquation;
+	private static Stack<String> signs;
 
     /**
      * Gets the precedence of symbols
@@ -41,7 +32,7 @@ public class InfixToPostfixConversion {
      * @param symbol to check in form of <code>char</code>
      * @return <code>int</code> precedence
      */
-	static int getPrecedence(String symbol) {
+	private static int getPrecedence(String symbol) {
 		switch (symbol) {
             case ")":
                 return 0;
@@ -67,9 +58,9 @@ public class InfixToPostfixConversion {
     /**
      * Pop the sign stack and add to the equation <code>List</code>
      */
-	private void pop() {
+	private static void pop() {
         // Do not include grouper characters in the equation
-        if (valueChecker.isGrouper(signs.peek())) {
+        if (ValueChecker.isGrouper(signs.peek())) {
             signs.pop();
         }
         else {
@@ -83,7 +74,7 @@ public class InfixToPostfixConversion {
      * 
      * @param symbol to push in the <code>Stack</code>
      */
-	private void push(String symbol) {
+	private static void push(String symbol) {
         try {
             if (getPrecedence(signs.peek()) > getPrecedence(symbol)) {
                 pop();
@@ -107,19 +98,19 @@ public class InfixToPostfixConversion {
      * of <code>List</code>
      * @return <code>List</code> equation in postfix notation
      */
-	public List<String> convertToPostfix(List<String> equation) {
+	public static List<String> convertToPostfix(List<String> equation) {
 		
-        tempEquation.clear();
-        signs.clear();
+        tempEquation = new ArrayList<String>();
+        signs = new Stack<String>();
 
         push("(");
 		for (String equationSegment : equation) {
             // Push symbols to sign stack
-			if (valueChecker.isSymbol(equationSegment)) {
+			if (ValueChecker.isSymbol(equationSegment)) {
                 push(equationSegment);
             }
             // Push numbers to equation stack
-            else if (valueChecker.isNumber(equationSegment)) {
+            else if (ValueChecker.isNumber(equationSegment)) {
                 tempEquation.add(equationSegment);
             }
 		}
