@@ -29,14 +29,14 @@ public class EquationTest {
      */
     public EquationTest() {
         System.out.println("\nEquation Test Start");
-        convertToProperEquation();
+        extractEquation();
         System.out.println("\nEquation Test End");
     }
     
     /**
-     * Tests convertToProperEquation() method
+     * Tests extractEquation() method
      */
-    private void convertToProperEquation() {
+    private void extractEquation() {
         String input;
         List<String> expectedResult = new ArrayList<String>();
         List<String> actualResult = new ArrayList<String>();
@@ -93,6 +93,20 @@ public class EquationTest {
         input = "1+1=";
         expectedResult.addAll(Arrays.asList("1", "+", "1", "="));
         actualResult.addAll(Equation.extractEquation(input));
+        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8");
+        expectedResult.clear();
+        actualResult.clear();
+
+        input = "1+a=";
+        expectedResult.addAll(Arrays.asList("1", "+", "0.0", "="));
+        actualResult.addAll(Equation.extractEquation(input));
+        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8");
+        expectedResult.clear();
+        actualResult.clear();
+
+        input = "1+a=";
+        expectedResult.addAll(Arrays.asList("1", "+", "5.0", "="));
+        actualResult.addAll(Equation.extractEquation(input, 5D));
         AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8");
         expectedResult.clear();
         actualResult.clear();
