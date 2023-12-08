@@ -6,6 +6,7 @@
  *      December 8, 2023 - S. Cortel - Changed method access to static;
  *                                     Added isOpenGrouper();
  *                                     Added isCloseGrouper();
+ * 		December 9, 2023 - S. Cortel - Changed access to certain methods to static;		
  * 
  * Purpose
  * 		
@@ -28,11 +29,7 @@ public class ValueCheckerTest {
         isSymbol();
         isOperator();
         isRootOperator();
-        isMinus();
         isGrouper();
-        isOpenGrouper();
-        isCloseGrouper();
-        isEquals();
         isNumber();
         System.out.println("\nValue Checker Test End");
     }
@@ -252,36 +249,6 @@ public class ValueCheckerTest {
     }
 
     /**
-     * Tests the isMinus() method
-     */
-    private void isMinus() {
-        char inputChar;
-        String inputString;
-        boolean expectedResult;
-        boolean actualResult;
-
-        inputChar = '-';
-        expectedResult = true;
-        actualResult = ValueChecker.isMinus(inputChar);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 1");
-
-        inputChar = '.';
-        expectedResult = false;
-        actualResult = ValueChecker.isMinus(inputChar);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 2");
-
-        inputString = "-";
-        expectedResult = true;
-        actualResult = ValueChecker.isMinus(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 3");
-
-        inputString = ".";
-        expectedResult = false;
-        actualResult = ValueChecker.isMinus(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isMinus() test 4");
-    }
-    
-    /**
      * Tests the isGrouper() method
      */
     private void isGrouper() {
@@ -319,106 +286,6 @@ public class ValueCheckerTest {
         expectedResult = false;
         actualResult = ValueChecker.isGrouper(inputString);
         AssertUnit.assertEquals(expectedResult, actualResult, "isGrouper() test 6");
-    }
-
-    /**
-     * Tests the isOpenGrouper() method 
-     */
-    private void isOpenGrouper() {
-        char input;
-        String inputString;
-        boolean expectedResult;
-        boolean actualResult;
-        
-        input = '(';
-        expectedResult = true;
-        actualResult = ValueChecker.isOpenGrouper(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isOpenGrouper() test 1");
-
-        input = ')';
-        expectedResult = false;
-        actualResult = ValueChecker.isOpenGrouper(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isOpenGrouper() test 2");
-
-        inputString = "(";
-        expectedResult = true;
-        actualResult = ValueChecker.isOpenGrouper(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isOpenGrouper() test 3");
-
-        inputString = ")";
-        expectedResult = false;
-        actualResult = ValueChecker.isOpenGrouper(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isOpenGrouper() test 4");
-
-        inputString = "))";
-        expectedResult = false;
-        actualResult = ValueChecker.isOpenGrouper(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isOpenGrouper() test 5");
-    }
-
-    /**
-     * Tests the isCloseGrouper() method 
-     */
-    private void isCloseGrouper() {
-        char input;
-        String inputString;
-        boolean expectedResult;
-        boolean actualResult;
-        
-        input = ')';
-        expectedResult = true;
-        actualResult = ValueChecker.isCloseGrouper(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isCloseGrouper() test 1");
-
-        input = '(';
-        expectedResult = false;
-        actualResult = ValueChecker.isCloseGrouper(input);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isCloseGrouper() test 2");
-
-        inputString = ")";
-        expectedResult = true;
-        actualResult = ValueChecker.isCloseGrouper(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isCloseGrouper() test 3");
-
-        inputString = "(";
-        expectedResult = false;
-        actualResult = ValueChecker.isCloseGrouper(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isCloseGrouper() test 4");
-
-        inputString = "((";
-        expectedResult = false;
-        actualResult = ValueChecker.isCloseGrouper(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isCloseGrouper() test 5");
-    }
-
-    /**
-     * Tests the isEquals() method
-     */
-    private void isEquals() {
-        char inputChar;
-        String inputString;
-        boolean expectedResult;
-        boolean actualResult;
-
-        inputChar = '=';
-        expectedResult = true;
-        actualResult = ValueChecker.isEquals(inputChar);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 1");
-
-        inputChar = '.';
-        expectedResult = false;
-        actualResult = ValueChecker.isEquals(inputChar);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 2");
-
-        inputString = "=";
-        expectedResult = true;
-        actualResult = ValueChecker.isEquals(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 3");
-
-        inputString = ".";
-        expectedResult = false;
-        actualResult = ValueChecker.isEquals(inputString);
-        AssertUnit.assertEquals(expectedResult, actualResult, "isEquals() test 4");
     }
 
     /**

@@ -112,7 +112,7 @@ public class Calculator {
      */
     public static int getEqualSignPosition(List<String> values) {
         int valuesLength = values.size();
-        String equalSign = ValueChecker.getEquals();
+        String equalSign = String.valueOf(ValueChecker.EQUALS);
 
         for (int i = 0; i < valuesLength; i++) {
             // Compare values to ValueChecker's equal sign
