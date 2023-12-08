@@ -34,6 +34,6 @@ public class Main {
     }
 
     private void startCalculator() {
-        new Calculator().runCalculator();
+        Calculator.runCalculator();
     }
 }
