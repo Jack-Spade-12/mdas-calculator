@@ -54,7 +54,7 @@ public class Calculator {
      * @param userInput to be processed in form of <code>String</code>
      */
     private static void processInput(String userInput) {
-        List<String> segmentedEquation = EquationExtractor.convertToProperEquation(userInput);
+        List<String> segmentedEquation = Equation.extractEquation(userInput, accumulated);
         int equalSignPosition = getEqualSignPosition(segmentedEquation);
          
         // Check if accumulate or compute
@@ -121,84 +121,6 @@ public class Calculator {
             }
         }
         return -1;
-    }
-
-    /**
-     * Polishes the equation:
-     *  1. Converting 'A' or 'a' to accumulated
-     *  2. Adding '*' characters in between numbers and parenthesis
-     *  3. Counts operators and operands such that operators == operands - 1
-     *  4. Make sure that root operatos are followed by open parenthesis
-     *  5. Make sure that there are equal numbers of open and close parenthesis
-     */
-    private static boolean validateEquation(List<String> segmentedEquation) {
-        int operands = 0;
-        int operators = 0;
-        int closeParenthesisCount = 0;
-        int openParenthesisCount = 0;
-        List<String> equation = segmentedEquation;
-        int equationLength = equation.size();
-        
-        try {
-            for (int i = 0; i < equationLength; i++) {
-                // Special
-                if (ValueChecker.isSpecial(equation.get(i))) {
-                    equation.set(i, String.valueOf(accumulated));
-                    operands++;
-                }
-                // Numbers
-                else if (ValueChecker.isNumber(equation.get(i))) {
-                    operands++;
-                }
-                // Operators
-                else if (ValueChecker.isSymbol(equation.get(i)) 
-                    && !ValueChecker.isGrouper(equation.get(i))) {
-                    operators++;
-                }
-                // Groupers
-                else if (ValueChecker.isGrouper(equation.get(i))) {
-                    if ( (i > 0 && ValueChecker.isNumber(equation.get(i - 1))) || 
-                        (i + 1 < equationLength && ValueChecker.isNumber(equation.get(i + 1))) ) {
-                        equation.add(i, "*");
-                        equationLength++;
-                    }
-
-                    // Count open parentheses
-                    if (equation.get(i).compareTo("(") == 0) {
-                        openParenthesisCount++;
-                    }
-                    // Count close parentheses
-                    else if (equation.get(i).compareTo(")") == 0) {
-                        closeParenthesisCount++;
-                    }
-                }
-            }
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            CalculatorIO.throwInvalidEquationError(accumulatedInputs, "Equation is incomplete.");
-            return false;
-        }
-
-        accumulatedInputs.clear();
-        accumulatedInputs.addAll(equation);
-
-        // Throw error and reset if operators and operators are not rational
-        if (operators != operands - 1) {
-            CalculatorIO.throwInvalidEquationError(
-                accumulatedInputs,
-                "Ratio between operands and operators are not correct.");
-            return false;
-        }
-
-        // Throw error if open and close parenthsis are not equal
-        if (openParenthesisCount != closeParenthesisCount) {
-            CalculatorIO.throwInvalidEquationError(
-                accumulatedInputs,
-                "Open and close parenthesis are not balanced");
-            return false;
-        }
-
-        return true;
     }
 
     /**
