@@ -11,7 +11,7 @@
  *                                     Changed from EquationExtractor to Equation;
  *                                     Added completeEquation() method from Calculator
  *                                     class;
- *                                     
+ * 		December 9, 2023 - S. Cortel - Changed access to certain methods to static;		
  *                                     
  * Purpose
  * 		
@@ -110,7 +110,7 @@ public class Equation {
             }
 
 			// If equal sign push to list
-			else if (ValueChecker.isEquals(equationChar)) {
+			else if (equationChar == ValueChecker.EQUALS) {
 				pushToList(equationList, temporary, equationChar);
 			}
 			
@@ -118,7 +118,7 @@ public class Equation {
 			else if (ValueChecker.isSymbol(equationChar)) {
 
 				// Validate if minus is to be negative or just minus
-				if (ValueChecker.isMinus(equationChar)) {
+				if (equationChar == ValueChecker.MINUS) {
 					// Minus is minus
 					if (ValueChecker.isNumber(peekList(equationList))) {
 						pushToList(equationList, temporary, equationChar);
