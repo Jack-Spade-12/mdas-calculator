@@ -237,20 +237,22 @@ public class Equation {
      *  2. Adding '*' characters in between numbers and parenthesis
      *  3. 
      */
-    // private static List<String> completeEquation(List<String> fullEquation, 
-    //     double lastAccumulated) {
+    private static List<String> completeEquation(List<String> fullEquation, 
+        double lastAccumulated) {
 
-    //     List<String> fixedEquation = new ArrayList<String>();
+        List<String> fixedEquation = new ArrayList<String>();
         
-    //     for (String equationSegment : fullEquation) {
-    //         // Special
-    //         if (ValueChecker.isSpecial(equationSegment)) {
-    //             fixedEquation.add(String.valueOf(equationSegment));
-    //         }
+        for (String equationSegment : fullEquation) {
+            // Special
+            if (ValueChecker.isSpecial(equationSegment)) {
+                fixedEquation.add(String.valueOf(equationSegment));
+            }
             
-    //         // else if () {
+            // else if () {
                 
-    //         // }
-    //     } 
-    // }
+            // }
+        } 
+
+        return fixedEquation;
+    }
 }
