@@ -6,6 +6,8 @@
  *      December 8, 2023 - S. Cortel - Changed access to ValueChecker methods to static;
  *                                     Added isOpenGrouper();
  *                                     Added isCloseGrouper();
+ *      December 9, 2023 - S. Cortel - Changed format for constants and enabled
+ *                                      static access;
  *      
  * Purpose
  * 		
@@ -25,10 +27,11 @@ public class ValueChecker {
     private static List<Character> groupers = Arrays.asList('(', ')');
     private static List<Character> rootOperators = Arrays.asList( 'R', 'r');
     private static List<Character> operators = Arrays.asList('/', '*', '^', '+', '-', '%', 'r', 'R');
-    private static char minus = '-';
-    private static char equals = '=';
-    private static char openGrouper = '(';
-    private static char closeGrouper = ')';
+    public static char MINUS = '-';
+    public static char EQUALS = '=';
+    public static char OPEN_PARENTHESIS = '(';
+    public static char CLOSE_PARENTHESIS = ')';
+    public static char MULTIPLY = '*';
     
     /**
 	 * Checks if a character is a special value 'A' or 'a'
@@ -135,26 +138,6 @@ public class ValueChecker {
     }
 
     /**
-     * Checks if a character is a minus (<code>-</code>)
-     * 
-     * @param value to check in form of <code>char</code>
-     * @return boolean
-     */
-    public static boolean isMinus(char value) {
-        return value == minus;
-    }
-
-    /**
-     * Checks if a string is a minus (<code>-</code>)
-     * 
-     * @param value to check in form of <code>String</code>
-     * @return boolean
-     */
-    public static boolean isMinus(String value) {
-        return value.length() == 1 && isMinus(value.charAt(0));
-    }
-
-    /**
      * Checks if a character is a grouper: open parenthesis
      * (<code>(</code>) or closed parenthesis (<code>)</code>)
      * 
@@ -174,79 +157,6 @@ public class ValueChecker {
      */
     public static boolean isGrouper(String value) {
         return value.length() == 1 && isGrouper(value.charAt(0));
-    }
-
-    /**
-     * Checks if a character is an open grouper a.k.a. open parenthesis
-     * (<code>(</code>)
-     * 
-     * @param value to check in form of <code>char</code>
-     * @return boolean
-     */
-    public static boolean isOpenGrouper(char value) {
-        return value == openGrouper;
-    }
-
-    /**
-     * Checks if a character is an open grouper a.k.a. open parenthesis
-     * (<code>(</code>)
-     * 
-     * @param value to check in form of <code>String</code>
-     * @return boolean
-     */
-    public static boolean isOpenGrouper(String value) {
-        return value.length() == 1 && isOpenGrouper(value.charAt(0));
-    }
-
-    /**
-     * Checks if a character is a close grouper a.k.a. close parenthesis
-     * (<code>)</code>)
-     * 
-     * @param value to check in form of <code>char</code>
-     * @return boolean
-     */
-    public static boolean isCloseGrouper(char value) {
-        return value == closeGrouper;
-    }
-
-    /**
-     * Checks if a character is a close grouper a.k.a. close parenthesis
-     * (<code>)</code>)
-     * 
-     * @param value to check in form of <code>String</code>
-     * @return boolean
-     */
-    public static boolean isCloseGrouper(String value) {
-        return value.length() == 1 && isCloseGrouper(value.charAt(0));
-    }
-
-    /**
-     * Checks is character is an equal sign (<code>=</code>)
-     * 
-     * @param value to check in form of <code>char</code>
-     * @return boolean
-     */
-    public static boolean isEquals(char value) {
-        return value == equals;
-    }
-
-    /**
-     * Checks is character is an equal sign (<code>=</code>)
-     * 
-     * @param value to check in form of <code>String</code>
-     * @return boolean
-     */
-    public static boolean isEquals(String value) {
-        return value.length() == 1 && isEquals(value.charAt(0));
-    }
-
-    /**
-     * Returns the equal sign
-     * 
-     * @return <code>String</code>
-     */
-    public static String getEquals() {
-        return String.valueOf(equals);
     }
 
     /**
