@@ -3,8 +3,10 @@
  * 		
  * 		December 2, 2023 - S. Cortel - Created
  *      December 7, 2023 - S. Cortel - Added isOperator() method
- *      December 8, 2023 - S. Cortel - Changed access to ValueChecker methods to static
- * 
+ *      December 8, 2023 - S. Cortel - Changed access to ValueChecker methods to static;
+ *                                     Added isOpenGrouper();
+ *                                     Added isCloseGrouper();
+ *      
  * Purpose
  * 		
  * 		The purpose of this class is to check if a 
@@ -25,6 +27,8 @@ public class ValueChecker {
     private static List<Character> operators = Arrays.asList('/', '*', '^', '+', '-', '%', 'r', 'R');
     private static char minus = '-';
     private static char equals = '=';
+    private static char openGrouper = '(';
+    private static char closeGrouper = ')';
     
     /**
 	 * Checks if a character is a special value 'A' or 'a'
@@ -170,6 +174,50 @@ public class ValueChecker {
      */
     public static boolean isGrouper(String value) {
         return value.length() == 1 && isGrouper(value.charAt(0));
+    }
+
+    /**
+     * Checks if a character is an open grouper a.k.a. open parenthesis
+     * (<code>(</code>)
+     * 
+     * @param value to check in form of <code>char</code>
+     * @return boolean
+     */
+    public static boolean isOpenGrouper(char value) {
+        return value == openGrouper;
+    }
+
+    /**
+     * Checks if a character is an open grouper a.k.a. open parenthesis
+     * (<code>(</code>)
+     * 
+     * @param value to check in form of <code>String</code>
+     * @return boolean
+     */
+    public static boolean isOpenGrouper(String value) {
+        return value.length() == 1 && isOpenGrouper(value.charAt(0));
+    }
+
+    /**
+     * Checks if a character is a close grouper a.k.a. close parenthesis
+     * (<code>)</code>)
+     * 
+     * @param value to check in form of <code>char</code>
+     * @return boolean
+     */
+    public static boolean isCloseGrouper(char value) {
+        return value == closeGrouper;
+    }
+
+    /**
+     * Checks if a character is a close grouper a.k.a. close parenthesis
+     * (<code>)</code>)
+     * 
+     * @param value to check in form of <code>String</code>
+     * @return boolean
+     */
+    public static boolean isCloseGrouper(String value) {
+        return value.length() == 1 && isCloseGrouper(value.charAt(0));
     }
 
     /**
