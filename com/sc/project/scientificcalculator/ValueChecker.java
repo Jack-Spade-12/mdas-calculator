@@ -27,11 +27,11 @@ public class ValueChecker {
     private static List<Character> groupers = Arrays.asList('(', ')');
     private static List<Character> rootOperators = Arrays.asList( 'R', 'r');
     private static List<Character> operators = Arrays.asList('/', '*', '^', '+', '-', '%', 'r', 'R');
-    public static char MINUS = '-';
-    public static char EQUALS = '=';
-    public static char OPEN_PARENTHESIS = '(';
-    public static char CLOSE_PARENTHESIS = ')';
-    public static char MULTIPLY = '*';
+    public static final char MINUS = '-';
+    public static final char EQUALS = '=';
+    public static final char OPEN_PARENTHESIS = '(';
+    public static final char CLOSE_PARENTHESIS = ')';
+    public static final char MULTIPLY = '*';
     
     /**
 	 * Checks if a character is a special value 'A' or 'a'
