@@ -8,6 +8,7 @@
  *                                     Added isCloseGrouper();
  *      December 9, 2023 - S. Cortel - Changed format for constants and enabled
  *                                      static access;
+ *      December 10, 2023 - S. Cortel - Fixed isOpertor() name to isOperator()
  *      
  * Purpose
  * 		
@@ -101,7 +102,7 @@ public class ValueChecker {
      * @param value to check in form of <code>char</code>
      * @return boolean
      */
-    public static boolean isOpertor(char value) {
+    public static boolean isOperator(char value) {
         return operators.contains(value);
     }
 
@@ -111,8 +112,8 @@ public class ValueChecker {
      * @param value to check in form of <code>String</code>
      * @return boolean
      */
-    public static boolean isOpertor(String value) {
-        return value.length() == 1 && isOpertor(value.charAt(0));
+    public static boolean isOperator(String value) {
+        return value.length() == 1 && isOperator(value.charAt(0));
     }
 
     /**

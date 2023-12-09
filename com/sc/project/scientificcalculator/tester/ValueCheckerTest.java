@@ -6,7 +6,8 @@
  *      December 8, 2023 - S. Cortel - Changed method access to static;
  *                                     Added isOpenGrouper();
  *                                     Added isCloseGrouper();
- * 		December 9, 2023 - S. Cortel - Changed access to certain methods to static;		
+ * 		December 9, 2023 - S. Cortel - Changed access to certain methods to static;	
+ *      December 10, 2023 - S. Cortel - Fixed spelling of isOperator() method;	
  * 
  * Purpose
  * 		
@@ -185,37 +186,37 @@ public class ValueCheckerTest {
 
         input = 'r';
         expectedResult = true;
-        actualResult = ValueChecker.isOpertor(input);
+        actualResult = ValueChecker.isOperator(input);
         AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 1");
 
         input = '/';
         expectedResult = true;
-        actualResult = ValueChecker.isOpertor(input);
+        actualResult = ValueChecker.isOperator(input);
         AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 2");
 
         input = '(';
         expectedResult = false;
-        actualResult = ValueChecker.isOpertor(input);
+        actualResult = ValueChecker.isOperator(input);
         AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 3");
 
         inputString = "r";
         expectedResult = true;
-        actualResult = ValueChecker.isOpertor(inputString);
+        actualResult = ValueChecker.isOperator(inputString);
         AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 4");
 
         inputString = "/";
         expectedResult = true;
-        actualResult = ValueChecker.isOpertor(inputString);
+        actualResult = ValueChecker.isOperator(inputString);
         AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 5");
 
         inputString = "(";
         expectedResult = false;
-        actualResult = ValueChecker.isOpertor(inputString);
+        actualResult = ValueChecker.isOperator(inputString);
         AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 6");
 
         inputString = "1 + 1";
         expectedResult = false;
-        actualResult = ValueChecker.isOpertor(inputString);
+        actualResult = ValueChecker.isOperator(inputString);
         AssertUnit.assertEquals(expectedResult, actualResult, "isOperator() test 7");
     }
 
