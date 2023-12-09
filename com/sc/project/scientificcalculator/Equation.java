@@ -14,8 +14,11 @@
  * 		December 9, 2023 - S. Cortel -  Changed access to certain methods to static;
  *                                      Merged completeEquation() method to 
  *                                      extractEqation() method;
- *                                      
- *                                     
+ *      December 10, 2023 - S. Cortel - Fixed bug for groupers;
+ *                                      Added additional logic to make negative 
+ *                                      signs as '-1 * <value>' instead of having
+ *                                      '-<value>';
+ * 
  * Purpose
  * 		
  * 		Processes a string into substrings to be
@@ -43,7 +46,7 @@ public class Equation {
 	 */
 	public static List<String> extractEquation (String equation, double lastAccumulated) {
 		
-		StringBuilder temporary = new StringBuilder();
+ 		StringBuilder temporary = new StringBuilder();
 		List<String> equationList = new ArrayList<String>();
 		char[] equationCharArray = equation.toCharArray();
         int equationCharCount = 0;
@@ -82,7 +85,8 @@ public class Equation {
 					}
 					// Minus is negative
 					else {
-						temporary.append(String.valueOf(equationChar));
+                        temporary.append(String.valueOf(equationChar) + "1");
+                        pushToList(equationList, temporary, ValueChecker.MULTIPLY);
 					}
 				}
                 
@@ -96,8 +100,12 @@ public class Equation {
                     // After the parenthesis: parenthesis then number
                     else if (equationChar == ValueChecker.CLOSE_PARENTHESIS 
                         && ValueChecker.isDigit(peekAhead(equation, equationCharCount))) {
-                         pushToList(equationList, temporary, equationChar);
-                         pushToList(equationList, temporary, ValueChecker.MULTIPLY);
+                        pushToList(equationList, temporary, equationChar);
+                        pushToList(equationList, temporary, ValueChecker.MULTIPLY);
+                    }
+                    // Everything else
+                    else {
+                        pushToList(equationList, temporary, equationChar);
                     }
                 }
 				
@@ -190,7 +198,7 @@ public class Equation {
 		try {
 			return equation.charAt(equationCharCount + 1);
 		}
-		catch (ArrayIndexOutOfBoundsException e) {
+		catch (StringIndexOutOfBoundsException e) {
 			return '\0';
 		}
 	}
