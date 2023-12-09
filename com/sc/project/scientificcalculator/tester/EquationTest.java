@@ -8,6 +8,9 @@
  *                                     EquationTest;
  *                                     Changed import from EquationExtractor to
  *                                     Equation;
+ *      December 10, 2023 - S. Cortel - Updated assertEquals() for String[] to use
+ *                                      assertEquals() for List<String>;
+ *                                      
  * 
  * Purpose
  * 		
@@ -44,70 +47,77 @@ public class EquationTest {
         input = "1 + 1";
         expectedResult.addAll(Arrays.asList("1", "+", "1"));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 1");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 1");
         expectedResult.clear();
         actualResult.clear();
         
         input = "10 / 15 + (100 + 2)";
         expectedResult.addAll(Arrays.asList("10", "/", "15", "+", "(", "100", "+", "2", ")"));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 2");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 2");
         expectedResult.clear();
         actualResult.clear();
 
         input = "10/15+(100+2)";
         expectedResult.addAll(Arrays.asList("10", "/", "15", "+", "(", "100", "+", "2", ")"));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 3");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 3");
         expectedResult.clear();
         actualResult.clear();
 
         input = "10 + r(1, 4)";
         expectedResult.addAll(Arrays.asList("10", "+", "r", "(", "1,", "4", ")"));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 4");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 4");
         expectedResult.clear();
         actualResult.clear();
 
         input = "-5 + 56 + -4.1";
-        expectedResult.addAll(Arrays.asList("-5", "+", "56", "+", "-4.1"));
+        expectedResult.addAll(Arrays.asList("-1", "*", "5", "+", "56", "+", "-1", "*", "4.1"));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 5");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 5");
         expectedResult.clear();
         actualResult.clear();
 
         input = "-(1)";
-        expectedResult.addAll(Arrays.asList("-", "(", "1", ")"));
+        expectedResult.addAll(Arrays.asList("-1", "*", "(", "1", ")"));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 6");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 6");
         expectedResult.clear();
         actualResult.clear();
 
         input = "-(1 + 1 = )";
-        expectedResult.addAll(Arrays.asList("-", "(", "1", "+", "1", "=", ")"));
+        expectedResult.addAll(Arrays.asList("-1", "*", "(", "1", "+", "1", "=", ")"));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 7");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 7");
         expectedResult.clear();
         actualResult.clear();
 
         input = "1+1=";
         expectedResult.addAll(Arrays.asList("1", "+", "1", "="));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 8");
         expectedResult.clear();
         actualResult.clear();
 
         input = "1+a=";
         expectedResult.addAll(Arrays.asList("1", "+", "0.0", "="));
         actualResult.addAll(Equation.extractEquation(input));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 9");
         expectedResult.clear();
         actualResult.clear();
 
         input = "1+a=";
         expectedResult.addAll(Arrays.asList("1", "+", "5.0", "="));
         actualResult.addAll(Equation.extractEquation(input, 5D));
-        AssertUnit.assertEquals(expectedResult.toArray(new String[expectedResult.size()]), actualResult.toArray(new String[actualResult.size()]), "convertToProperEquation() test 8");
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 10");
+        expectedResult.clear();
+        actualResult.clear();
+
+        input = "1(5)2";
+        expectedResult.addAll(Arrays.asList("1", "*", "(", "5", ")", "*", "2"));
+        actualResult.addAll(Equation.extractEquation(input, 5D));
+        AssertUnit.assertEquals(expectedResult, actualResult, "convertToProperEquation() test 11");
         expectedResult.clear();
         actualResult.clear();
     }
