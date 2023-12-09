@@ -10,8 +10,9 @@
  *                                     Equation;
  *      December 10, 2023 - S. Cortel - Updated assertEquals() for String[] to use
  *                                      assertEquals() for List<String>;
+ *                                      Updated tests to support new approach to 
+ *                                      negation of values;
  *                                      
- * 
  * Purpose
  * 		
  * 		Tester class for scientificcalculator.Equation
