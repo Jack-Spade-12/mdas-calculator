@@ -7,6 +7,8 @@
  *      December 5, 2023 - S. Cortel - Modified
  *      December 8, 2023 - S. Cortel - Changed EquationExtractorTest to
  *                                     EquationTest
+ *      December 10, 2023 - S. Cortel - Removed test for the deleted CalculatorTest
+ *                                      file;
  * 
  * Purpose
  * 		
@@ -22,7 +24,6 @@ public class MainTest {
         new EquationTest();
         new InfixToPostfixConversionTest();
         new ComputerTest();
-        new CalculatorTest();
     }
 
 }

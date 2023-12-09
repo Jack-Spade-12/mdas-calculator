@@ -278,7 +278,7 @@ public class Equation {
      * @param equation to check in form of <code>List<String></code>
      * @return <code>int</code>
      */
-    private static int getEqualSignPosition(List<String> equation) {
+    public static int getEqualSignPosition(List<String> equation) {
         int equationLength = equation.size();
         String equalSign = String.valueOf(ValueChecker.EQUALS);
 
