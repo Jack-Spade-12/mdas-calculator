@@ -19,6 +19,8 @@
  *                                      signs as '-1 * <value>' instead of having
  *                                      '-<value>';
  *                                      Polished pushToList() with double param;
+ *                                      Added isValidEquation(), isEqualSignAtEquationEnd()
+ *                                      and getEqualSignPosition() methods;
  * 
  * Purpose
  * 		
@@ -184,7 +186,7 @@ public class Equation {
 	}
 
 	/**
-	 * Gets the character at the next index
+	 * Gets the <code>char</code> at the next index
 	 * 
      * @param equation in form of <code>String</code>
      * @param equationCharCount of the current character in form of <code>int</code>
@@ -199,8 +201,96 @@ public class Equation {
 		}
 	}
     
+    /**
+     * Gets the <code>String</code> at the next index
+     * 
+     * @param equation in form of <code>List</code>
+     * @param listCount of the current <code>String</code> in form of <code>List</code>
+	 * @return <code>String</code>
+     */
+    private static String peekAhead(List<String> equation, int listCount) {
+		try {
+			return equation.get(listCount + 1);
+		}
+		catch (StringIndexOutOfBoundsException e) {
+			return null;
+		}
+	}
 
+    /**
+     * Tests the following:
+     *  1. Operators == Operands - 1
+     *  2. Root operators are followed by open parenthesis
+     *  3. Open Parenthesis == Close Parenthesis
+     *  4. Equal sign is at the very end of the equation
+     */
+    public static boolean isValidEquation(List<String> equation) {
+        int equationLength = equation.size();
+        int operands = 0;
+        int operators = 0;
+        int closeParenthesis = 0;
+        int openParenthesis = 0;
+        boolean validRoot = true;
+        
+        for (int i = 0; i < equationLength; i++) {
+            // Check operators
+            if (ValueChecker.isOperator(equation.get(i))) {
+                operators++;
+                
+                // Check root
+                if (ValueChecker.isRootOperator(equation.get(i))) {
+                    validRoot = peekAhead(equation, i).charAt(0) 
+                        == ValueChecker.OPEN_PARENTHESIS;
+                }
+            }
+            // Check operands
+            else if (ValueChecker.isNumber(equation.get(i))) {
+                operands++;
+            }
+            // Check open parenthesis
+            else if (equation.get(i).charAt(0) == ValueChecker.OPEN_PARENTHESIS) {
+                openParenthesis++;
+            }
+            // Check close parenthesis
+            else if (equation.get(i).charAt(0) == ValueChecker.CLOSE_PARENTHESIS) {
+                closeParenthesis++;
+            }
+        }
 
+        return operands - 1 == operators && closeParenthesis == openParenthesis
+            && isEqualSignAtEquationEnd(equation) && validRoot;
+    }
+
+    /**
+     * Checks if the equal sign is at the end of the equation.
+     * 
+     * @param equation to check in form of <code>List<String></code>
+     * @return <code>boolean</code>
+     */
+    public static boolean isEqualSignAtEquationEnd(List<String> equation) {
+        int equalSignPosition = getEqualSignPosition(equation);
+        return equalSignPosition == -1 || equalSignPosition == equation.size() - 1;
+    }
+
+    /**
+     * Checks the position of the equal sign in the equation.
+     * 
+     * @param equation to check in form of <code>List<String></code>
+     * @return <code>boolean</code>
+     */
+    private static int getEqualSignPosition(List<String> equation) {
+        int equationLength = equation.size();
+        String equalSign = String.valueOf(ValueChecker.EQUALS);
+
+        for (int i = 0; i < equationLength; i++) {
+            // Compare values to ValueChecker's equal sign
+            if (equation.get(i).compareTo(equalSign) == 0) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 
 
 

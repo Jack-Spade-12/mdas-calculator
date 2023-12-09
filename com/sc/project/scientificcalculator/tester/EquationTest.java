@@ -12,6 +12,7 @@
  *                                      assertEquals() for List<String>;
  *                                      Updated tests to support new approach to 
  *                                      negation of values;
+ *                                      Added isValidEquation();
  *                                      
  * Purpose
  * 		
@@ -34,6 +35,8 @@ public class EquationTest {
     public EquationTest() {
         System.out.println("\nEquation Test Start");
         extractEquation();
+        isEqualSignAtEquationEnd();
+        isValidEquation();
         System.out.println("\nEquation Test End");
     }
     
@@ -122,4 +125,84 @@ public class EquationTest {
         expectedResult.clear();
         actualResult.clear();
     }
+
+    /**
+     * Tests isEqualSignAtEquationEnd() method
+     */
+    private void isEqualSignAtEquationEnd() {
+        List<String> input = new ArrayList<String>();
+        boolean expectedResult;
+        boolean actualResult;
+
+        input.addAll(Arrays.asList("1", "+", "1", "="));
+        expectedResult = true;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isEqualSignAtEquationEnd() test 1");
+        input.clear();
+
+        input.addAll(Arrays.asList("1", "=", "1", "="));
+        expectedResult = false;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isEqualSignAtEquationEnd() test 2");
+        input.clear();
+
+        input.addAll(Arrays.asList("1", "=", "1"));
+        expectedResult = false;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isEqualSignAtEquationEnd() test 3");
+        input.clear();
+    }
+
+    /**
+     * Tests isValidEquatin() method
+     */
+    private void isValidEquation() {
+        List<String> input = new ArrayList<String>();
+        boolean expectedResult;
+        boolean actualResult;
+
+        input.addAll(Arrays.asList("1", "+", "1", "="));
+        expectedResult = true;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isValidEquatin() test 1");
+        input.clear();
+
+        input.addAll(Arrays.asList("1", "+", "(", "5", "+", "10", ")"));
+        expectedResult = true;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isValidEquatin() test 2");
+        input.clear();
+
+        input.addAll(Arrays.asList("1", "+", "(", "5", "+", "10"));
+        expectedResult = false;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isValidEquatin() test 3");
+        input.clear();
+
+        input.addAll(Arrays.asList("1", "+", "5", "+", "10", ")"));
+        expectedResult = false;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isValidEquatin() test 4");
+        input.clear();    
+
+        input.addAll(Arrays.asList("1", "+", "=", "5", "+", "10", ")"));
+        expectedResult = false;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isValidEquatin() test 5");
+        input.clear();    
+
+        input.addAll(Arrays.asList("1", "(", "5", "10", ")"));
+        expectedResult = false;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isValidEquatin() test 2");
+        input.clear();
+
+        input.addAll(Arrays.asList("1", "+", "-", "(", "5", "+", "10", ")"));
+        expectedResult = false;
+        actualResult = Equation.isValidEquation(input);
+        AssertUnit.assertEquals(expectedResult, actualResult, "isValidEquatin() test 2");
+        input.clear();    
+    }
+
+
 }
