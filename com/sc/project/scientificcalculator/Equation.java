@@ -18,6 +18,7 @@
  *                                      Added additional logic to make negative 
  *                                      signs as '-1 * <value>' instead of having
  *                                      '-<value>';
+ *                                      Polished pushToList() with double param;
  * 
  * Purpose
  * 		
@@ -136,23 +137,6 @@ public class Equation {
     }
 
     /**
-	 * Adds the accumulated value to the equation list
-	 * 
-     * @param equationList so far
-     * @param temporary accumulated number value
-	 * @param accumulated to add in form of <code>double</code>
-	 */
-	private static void pushToList(List<String> equationList, StringBuilder temporary, double accumulated) {
-		// Add the accumulated number first if there is
-		if (temporary.length() > 0) {
-			equationList.add(temporary.toString());
-			temporary.setLength(0);
-		}
-		
-		equationList.add(String.valueOf(accumulated));
-	}
-
-    /**
 	 * Adds the value to the equation list
 	 * 
      * @param equationList so far
@@ -170,6 +154,18 @@ public class Equation {
 		if (!Character.isWhitespace(value)) {
 			equationList.add(String.valueOf(value));
 		}
+	}
+
+    /**
+	 * Adds the accumulated value to the equation list
+	 * 
+     * @param equationList so far
+     * @param temporary accumulated number value
+	 * @param accumulated to add in form of <code>double</code>
+	 */
+	private static void pushToList(List<String> equationList, StringBuilder temporary, double accumulated) {
+		pushToList(equationList, temporary, ' ');
+        equationList.add(String.valueOf(accumulated));
 	}
 
 	/**
