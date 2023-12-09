@@ -11,7 +11,6 @@
  *                                     Converted String[] to List<String>;
  *      December 10, 2023 - S. Cortel - Refactored Calculator class;
  *                                      Extended CalculatorIO class;
- *                                      Changed processInput() to public;
  *                                      Added a failsafe if when the only input
  *                                      is '=';             
  * 
