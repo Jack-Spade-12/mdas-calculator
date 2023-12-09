@@ -9,6 +9,11 @@
  *                                     Organized methods;
  *                                     Removed IO methods;
  *                                     Converted String[] to List<String>;
+ *      December 10, 2023 - S. Cortel - Refactored Calculator class;
+ *                                      Extended CalculatorIO class;
+ *                                      Changed processInput() to public;
+ *                                      Added a failsafe if when the only input
+ *                                      is '=';             
  * 
  * Purpose
  * 		
@@ -21,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Calculator {
+public class Calculator extends CalculatorIO {
 	private static Scanner scanner = new Scanner(System.in);
 	
     // Accumulates user input, useful for multiple continuous inputs
@@ -34,15 +39,15 @@ public class Calculator {
      */
     public static void runCalculator() {
 		String userInput;		
-		CalculatorIO.printHeader();
-        CalculatorIO.printHelp();
+		printHeader();
+        printHelp();
 		
         do {
             System.out.print("\n: ");
 			userInput = scanner.nextLine();
 			processInput(userInput);
 		}
-        while (CalculatorIO.isContinue(userInput));
+        while (isContinue(userInput));
 
         executeExit();
 	}
@@ -55,15 +60,14 @@ public class Calculator {
      */
     private static void processInput(String userInput) {
         List<String> segmentedEquation = Equation.extractEquation(userInput, accumulated);
-        int equalSignPosition = getEqualSignPosition(segmentedEquation);
-         
+        
         // Check if accumulate or compute
         // Compute
-        if (equalSignPosition > -1) {
+        if (Equation.getEqualSignPosition(segmentedEquation) > -1) {
 
             // Check that equal sign is not in the middle of the equation
-            if (equalSignPosition < segmentedEquation.size() - 1) {
-                CalculatorIO.throwInvalidInputError(
+            if (!Equation.isEqualSignAtEquationEnd(segmentedEquation)) {
+                throwInvalidInputError(
                     accumulatedInputs,
                     "Equal sign must be at the end of the equation", 
                     segmentedEquation);
@@ -73,23 +77,36 @@ public class Calculator {
             
             // Accumulate
             accumulatedInputs.addAll(segmentedEquation);
+            
+            // Fail safe when only input is '='
+            if (accumulatedInputs.size() == 1 
+                && accumulatedInputs.get(0).charAt(0) 
+                == ValueChecker.EQUALS) {
+                // Output the equation
+                outputAccumulated(accumulated);
+                return;
+            }
 
             // Polish equation and check if valid
-            if (validateEquation(accumulatedInputs)) {
+            if (Equation.isValidEquation(accumulatedInputs)){
                 
                 // Print the equation
                 System.out.print("> ");
-                CalculatorIO.printCurrentInput(accumulatedInputs);
+                printCurrentInput(accumulatedInputs);
 
                 // Compute the equation
-                Computer.computeEquation(accumulatedInputs);
+                accumulated = Computer.computeEquation(accumulatedInputs);
                 
                 // Output the equation
-                CalculatorIO.outputAccumulated(accumulated);
+                outputAccumulated(accumulated);
+                
+                accumulatedInputs.clear();
                 return;
             }
             // Exit method when formula fails
             else {
+                throwInvalidEquationError(accumulatedInputs);
+                accumulatedInputs.clear();
                 return;
             }
         }
@@ -100,27 +117,7 @@ public class Calculator {
 
         // Continuously print out the equation
         System.out.print("> ");
-        CalculatorIO.printAccumulated(accumulatedInputs);
-    }
-
-    /**
-     * Gets the position of the equal sign in the values.
-     * Returns -1 if no equal sign is found.
-     * 
-     * @param values to check in form of <code>List<String></code>
-     * @return <code>int</code>
-     */
-    public static int getEqualSignPosition(List<String> values) {
-        int valuesLength = values.size();
-        String equalSign = String.valueOf(ValueChecker.EQUALS);
-
-        for (int i = 0; i < valuesLength; i++) {
-            // Compare values to ValueChecker's equal sign
-            if (values.get(i).compareTo(equalSign) == 0) {
-                return i;
-            }
-        }
-        return -1;
+        printAccumulated(accumulatedInputs);
     }
 
     /**

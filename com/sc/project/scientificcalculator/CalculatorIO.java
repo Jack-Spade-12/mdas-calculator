@@ -6,6 +6,7 @@
  *                                     Updated method parameters to accept 
  *                                     accumulatedInputs;
  *                                     Converted method access modifiers to static;
+ *      December 10, 2023 - S. Cortel - Updated throwInvalidInputError(); 
  * 
  * Purpose
  * 		
@@ -142,10 +143,9 @@ public class CalculatorIO {
      * 
      * @param errorMessage to show in the calculator in form of <code>String</code>
      */
-    public static void throwInvalidEquationError(List<String> accumulatedInputs, 
-        String errorMessage) {
+    public static void throwInvalidEquationError(List<String> accumulatedInputs) {
 
-        System.out.println("Invalid Formula: " + errorMessage);
+        System.out.print("Invalid Equation ");
         printAccumulated(accumulatedInputs);
         System.out.println("Calculator has been cleared");
     }
