@@ -24,6 +24,8 @@
  *      December 16, 2023 - S. Cortel - Fixed bug caused by whitespace next to 
  *                                      open parenthesis and close parenthesis followed
  *                                      by an open parenthesis;
+ *                                      Fixed bug caused by minus '-' sign exactly
+ *                                      right next to a number;
  * 
  * Purpose
  * 		
@@ -86,7 +88,8 @@ public class Equation {
 				// Validate if minus is to be negative or just minus
 				if (equationChar == ValueChecker.MINUS) {
 					// Minus is minus
-					if (ValueChecker.isNumber(peekBack(equationList))) {
+					if (ValueChecker.isNumber(peekBack(equationList)) 
+                        || temporary.length() > 0) {
 						pushToList(equationList, temporary, equationChar);
 					}
 					// Minus is negative
