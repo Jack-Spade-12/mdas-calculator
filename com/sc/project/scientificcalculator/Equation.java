@@ -21,6 +21,9 @@
  *                                      Polished pushToList() with double param;
  *                                      Added isValidEquation(), isEqualSignAtEquationEnd()
  *                                      and getEqualSignPosition() methods;
+ *      December 16, 2023 - S. Cortel - Fixed bug caused by whitespace next to 
+ *                                      open parenthesis and close parenthesis followed
+ *                                      by an open parenthesis;
  * 
  * Purpose
  * 		
@@ -95,14 +98,16 @@ public class Equation {
                 
                 // Add '*' to  numbers next to groupers
                 else if (ValueChecker.isGrouper(equationChar)) {
-                    // Before the parenthesis: number then parenthesis
-                    if (equationChar == ValueChecker.OPEN_PARENTHESIS && temporary.length() > 0) {
+                    // number then parenthesis or close parenthesis then open parenthesis
+                    if (isMultiplyValidBeforeOpenParenthesis(equationChar, equationList, 
+                        temporary.toString())) {
+
                         pushToList(equationList, temporary, ValueChecker.MULTIPLY);
                         pushToList(equationList, temporary, equationChar);
                     }
-                    // After the parenthesis: parenthesis then number
+                    // parenthesis then number
                     else if (equationChar == ValueChecker.CLOSE_PARENTHESIS 
-                        && ValueChecker.isDigit(peekAhead(equation, equationCharCount))) {
+                        && ValueChecker.isDigit(peekAheadIgnoreWhitespace(equation, equationCharCount))) {
                         pushToList(equationList, temporary, equationChar);
                         pushToList(equationList, temporary, ValueChecker.MULTIPLY);
                     }
@@ -139,6 +144,30 @@ public class Equation {
     }
 
     /**
+     * Checks if a multiply '*' symbol is valid to be put before
+     * the open parenthesis '(' character; entire method can fit in a single
+     * if statement but is separated for readability
+     * 
+     * @param currentChar to test in form of <code>char</code>
+     * @param equationList so far in form of <code>List</code>
+     * @param temporary accumulated numbers in form of <code>String</code>
+     * @return <code>boolean</code>
+     */
+    private static boolean isMultiplyValidBeforeOpenParenthesis(char currentChar, 
+        List<String> equationList, String temporary) {
+        String peekBack = peekBack(equationList);
+        
+        // Check if current char is open parenthesis or if '(' is the start of equation
+        if (currentChar != ValueChecker.OPEN_PARENTHESIS || peekBack == null) {
+            return false;
+        }
+
+        // Check if number then open parenthesis or close parenthesis then open parenthesis
+        return temporary.length() > 0 || ValueChecker.isNumber(peekBack) 
+            || peekBack.charAt(0) == ValueChecker.CLOSE_PARENTHESIS;
+    }
+
+    /**
 	 * Adds the value to the equation list
 	 * 
      * @param equationList so far
@@ -169,7 +198,7 @@ public class Equation {
 		pushToList(equationList, temporary, ' ');
         equationList.add(String.valueOf(accumulated));
 	}
-
+    
 	/**
 	 * Gets the last pushed <code>String</code> in the equation list
 	 * 
@@ -190,16 +219,32 @@ public class Equation {
 	 * 
      * @param equation in form of <code>String</code>
      * @param equationCharCount of the current character in form of <code>int</code>
-	 * @return <codechar</code>
+	 * @return <code>char</code>
 	 */
 	private static char peekAhead(String equation, int equationCharCount) {
 		try {
-			return equation.charAt(equationCharCount + 1);
+            return equation.charAt(equationCharCount + 1);
 		}
 		catch (StringIndexOutOfBoundsException e) {
 			return '\0';
 		}
 	}
+
+    /**
+     * Gets the next non-whitespace <code>character</code> from the index
+	 * 
+     * @param equation in form of <code>String</code>
+     * @param equationCharCount of the current character in form of <code>int</code>
+	 * @return <code>char</code>
+     */
+    private static char peekAheadIgnoreWhitespace(String equation, int equationCharCount) {
+        char nextCharacter = peekAhead(equation, equationCharCount);
+        // get next character if whitespace
+        if (Character.isWhitespace(nextCharacter)) {
+            return peekAheadIgnoreWhitespace(equation, ++equationCharCount);
+        }
+        return nextCharacter;
+    }
     
     /**
      * Gets the <code>String</code> at the next index
@@ -257,7 +302,7 @@ public class Equation {
             }
         }
 
-        return operands - 1 == operators && closeParenthesis == openParenthesis
+        return  operands - 1 == operators && closeParenthesis == openParenthesis
             && isEqualSignAtEquationEnd(equation) && validRoot;
     }
 
