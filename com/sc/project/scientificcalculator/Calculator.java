@@ -13,6 +13,8 @@
  *                                      Extended CalculatorIO class;
  *                                      Added a failsafe if when the only input
  *                                      is '=';             
+ *      December 16, 2023 - S. Cortel - Cleared accumualated inputs when only
+ *                                      '=' sign is inputted;
  * 
  * Purpose
  * 		
@@ -83,6 +85,7 @@ public class Calculator extends CalculatorIO {
                 == ValueChecker.EQUALS) {
                 // Output the equation
                 outputAccumulated(accumulated);
+                accumulatedInputs.clear();
                 return;
             }
 
