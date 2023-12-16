@@ -8,32 +8,35 @@
  * Purpose of Submission:
  * 		Requirement for the subject:
  * 		Applications Development and Emerging Technologies
+ * 
+ * History:
+ * 
+ *      December 16, 2023 - S. Cortel - Added argument for "--test";
+ * 
  */
 package com.sc.project.scientificcalculator;
-import java.util.Scanner;
 
 import com.sc.project.scientificcalculator.tester.MainTest;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        System.out.print("\n\nTest? ");
-        if (sc.nextLine().toUpperCase().contains("Y")) {
-            new Main().startTests();
+        try {
+            switch (args[0]) {
+                // Test
+                case "--test":
+                    new MainTest();
+                    System.exit(0);
+                    break;
+
+                default:
+                    // throw InvalidOptionError
+                    break;
+            }
         }
-        else {
-            new Main().startCalculator();
+        catch (NullPointerException npe) {
+            // do nothing
         }
 
-        sc.close();
-    }
-
-    private void startTests() {
-        new MainTest();
-    }
-
-    private void startCalculator() {
         Calculator.runCalculator();
     }
 }
