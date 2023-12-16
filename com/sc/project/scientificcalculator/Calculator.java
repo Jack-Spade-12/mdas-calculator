@@ -15,6 +15,7 @@
  *                                      is '=';             
  *      December 16, 2023 - S. Cortel - Cleared accumualated inputs when only
  *                                      '=' sign is inputted;
+ *                                      Moved scanner variable to make it local;
  * 
  * Purpose
  * 		
@@ -28,9 +29,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Calculator extends CalculatorIO {
-	private static Scanner scanner = new Scanner(System.in);
-	
-    // Accumulates user input, useful for multiple continuous inputs
+	// Accumulates user input, useful for multiple continuous inputs
 	private static List<String> accumulatedInputs = new ArrayList<String>();		
     // Stores result of calculations
 	private static double accumulated = 0D;										
@@ -40,6 +39,8 @@ public class Calculator extends CalculatorIO {
      */
     public static void runCalculator() {
 		String userInput;		
+        Scanner scanner = new Scanner(System.in);
+
 		printHeader();
         printHelp();
 		
@@ -50,7 +51,7 @@ public class Calculator extends CalculatorIO {
 		}
         while (isContinue(userInput));
 
-        executeExit();
+        executeExit(scanner);
 	}
 
     /**
@@ -125,7 +126,7 @@ public class Calculator extends CalculatorIO {
     /**
      * Closes the scanner and exits the program
      */
-    private static void executeExit() {
+    private static void executeExit(Scanner scanner) {
         System.out.println("\n.\n.\n.\nCalculator has been terminated.");
         scanner.close();
         System.exit(0);
